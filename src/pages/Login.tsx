@@ -1,13 +1,37 @@
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { LoginType } from '../types';
 
 function Login() {
-  const [formData, setFormData] = useState({
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState<LoginType>({
     email: '',
     password: '',
   });
 
+  const [formValid, setFormValid] = useState(false);
+
+  const emailValidation = (email: string) => {
+    const regex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
+    return regex.test(email);
+  };
+
+  const passwordValidation = (password: string) => {
+    const regex = /^[a-z0-9]{6,}$/i;
+    return regex.test(password);
+  };
+
+  const handleChange = () => {
+    if (emailValidation(formData.email) && passwordValidation(formData.password)) {
+      setFormValid(true);
+    } else {
+      setFormValid(false);
+    }
+  };
+
   return (
-    <form className="login-form">
+    <form className="login-form" onChange={ handleChange }>
       <div>
         <label htmlFor="email-input">Email</label>
         <input
@@ -33,7 +57,7 @@ function Login() {
       <button
         data-testid="login-submit-btn"
         // onClick={ handleClick }
-        // disabled={ name.length < 3 }
+        disabled={ !formValid }
       >
         Enter
       </button>
