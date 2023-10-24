@@ -5,14 +5,14 @@ import Layout from './components/Layout';
 import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteResipes';
 import Drinks from './pages/Drinks';
-import Home from './pages/Home';
+import LoginPage from './pages/LoginPage';
 import Meals from './pages/Meals';
 import Profile from './pages/Profile';
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={ <Home /> } />
+      <Route path="/" element={ <LoginPage /> } />
       <Route path="meals:id" element={ <Meals /> } />
       <Route path="drinks:id" element={ <Drinks /> } />
       <Route path="meals:id/in-progress" element={ <Meals /> } />
