@@ -1,6 +1,5 @@
 import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
-import App from '../App';
 import Login from '../pages/Login';
 
 describe('Tests for the login page', () => {
