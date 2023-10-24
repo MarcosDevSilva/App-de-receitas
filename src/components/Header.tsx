@@ -6,10 +6,10 @@ export default function Header() {
     <header>
       <h1 data-testid="page-title">Título</h1>
       <button data-testid="profile-top-btn">
-        <img src={ profileIcon } alt="profile icon" />
+        <img src={profileIcon} alt="profile icon" />
       </button>
       <button data-testid="search-top-btn">
-        <img src={ searchIcon } alt="search icon" />
+        <img src={searchIcon} alt="search icon" />
       </button>
     </header>
   );

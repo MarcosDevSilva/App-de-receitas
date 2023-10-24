@@ -1,4 +1,11 @@
+import { useState } from "react";
+
 function Login() {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
   return (
     <form className="login-form">
       <div>
@@ -8,8 +15,8 @@ function Login() {
           name="email-input"
           data-testid="email-input"
           placeholder="Email"
-          // value={ name }
-          // onChange={ handleChange }
+          value={formData.email}
+          onChange={(e) => setFormData({ ...formData, email: e.target.value }) }
         />
       </div>
       <div>
@@ -19,8 +26,8 @@ function Login() {
           name="password-input"
           data-testid="password-input"
           placeholder="Password"
-          // value={ name }
-          // onChange={ handleChange }
+          value={formData.password}
+          onChange={(e) => setFormData({ ...formData, password: e.target.value }) }
         />
       </div>
       <button
