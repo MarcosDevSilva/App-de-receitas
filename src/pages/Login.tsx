@@ -1,9 +1,9 @@
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { LoginType } from '../types';
 
 function Login() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const [formData, setFormData] = useState<LoginType>({
     email: '',
