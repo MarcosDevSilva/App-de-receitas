@@ -1,0 +1,18 @@
+.container {
+  align-items: center;
+  background-color: #41197f;
+  bottom: 0;
+  display: flex;
+
+  /* trocar por var */
+  height: 52px;
+  justify-content: space-around;
+  position: fixed;
+  width: 360px;
+}
+
+.icon {
+  filter: invert(82%) sepia(61%) saturate(1973%) hue-rotate(330deg) brightness(110%) contrast(110%);
+  height: 30px;
+  width: 30px;
+}
