@@ -37,7 +37,7 @@ function Login() {
   };
 
   return (
-    <div className="login-form" onChange={ handleChange }>
+    <form className="login-form" onChange={ handleChange }>
       <div>
         <label htmlFor="email-input">Email</label>
         <input
@@ -64,10 +64,11 @@ function Login() {
         data-testid="login-submit-btn"
         onClick={ handleClick }
         disabled={ !formValid }
+        type="submit"
       >
         Enter
       </button>
-    </div>
+    </form>
   );
 }
 
