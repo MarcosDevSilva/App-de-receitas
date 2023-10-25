@@ -21,3 +21,9 @@ export type Meal = {
   strMeal: string;
   strMealThumb: string;
 };
+
+export type LoginType = {
+  email: string;
+  password: string;
+
+};
