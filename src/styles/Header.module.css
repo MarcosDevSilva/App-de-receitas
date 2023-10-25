@@ -1,0 +1,67 @@
+header {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 360px;
+}
+
+.upperBar {
+  align-items: center;
+  background-color: var(--yellow);
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+  height: 52px;
+  margin-bottom: 26px;
+  padding-left: 26px;
+  padding-right: 21px;
+  width: 360px;
+}
+
+.logo {
+  flex-shrink: 0;
+  height: 16.972px;
+  margin-left: 20.76px;
+  margin-right: 68.5px;
+  width: 109.131px;
+}
+
+.profileBtn {
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+  height: 29px;
+  margin-bottom: 11px;
+  width: 29px;
+}
+
+.searchBtn {
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+  height: 27px;
+  margin-bottom: 11px;
+  margin-right: 16.15px;
+  width: 27px;
+}
+
+.titleContainer {
+  align-items: center;
+  color: #41197f;
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 900;
+  letter-spacing: 2.1px;
+  line-height: normal;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.titleContainer img {
+  flex-shrink: 0;
+  height: 29.532px;
+  margin-bottom: 13.47px;
+  width: 40.334px;
+}
