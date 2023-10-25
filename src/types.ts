@@ -21,3 +21,10 @@ export type Meal = {
   strMeal: string;
   strMealThumb: string;
 };
+
+export type RecipesType = {
+  drink: Drink[]
+  meal: Meal[]
+  loading: boolean;
+  recipeType: string;
+};
