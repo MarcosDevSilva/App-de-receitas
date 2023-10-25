@@ -1,15 +1,16 @@
 // import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { LoginType } from '../types';
 
 function Login() {
-
   const [formData, setFormData] = useState<LoginType>({
     email: '',
     password: '',
   });
 
   const [formValid, setFormValid] = useState(false);
+  const navigate = useNavigate();
 
   const emailValidation = (email: string) => {
     const regex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
@@ -30,8 +31,9 @@ function Login() {
   };
 
   const handleClick = () => {
-    const email = formData.email;
+    const { email } = formData;
     localStorage.setItem('user', JSON.stringify({ email }));
+    navigate('/meals');
   };
 
   return (
