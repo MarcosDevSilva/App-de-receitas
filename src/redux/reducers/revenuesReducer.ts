@@ -1,6 +1,7 @@
 import { AnyAction } from 'redux';
-import { REQUEST_LOADING, REQUEST_SUCCESSFUL_DRINKS,
+import { REQUEST_FAILED, REQUEST_LOADING, REQUEST_SUCCESSFUL_DRINKS,
   REQUEST_SUCCESSFUL_MEALS } from '../actions';
+import { alerMessageEmpty } from '../../utils/alertMessage';
 
 const initialState = {
   drinks: [],
@@ -12,7 +13,7 @@ const revenuesReducer = (state = initialState, action: AnyAction) => {
   switch (action.type) {
     case REQUEST_SUCCESSFUL_DRINKS:
       if (action.payload === null) {
-        window.alert('Sorry, we haven\'t found any recipes for these filters.');
+        alerMessageEmpty();
         return {
           ...state,
           drinks: [],
@@ -24,7 +25,7 @@ const revenuesReducer = (state = initialState, action: AnyAction) => {
       };
     case REQUEST_SUCCESSFUL_MEALS:
       if (action.payload === null) {
-        window.alert('Sorry, we haven\'t found any recipes for these filters.');
+        alerMessageEmpty();
         return {
           ...state,
           meals: [],
@@ -41,6 +42,9 @@ const revenuesReducer = (state = initialState, action: AnyAction) => {
         drinks: [],
         meals: [],
       };
+    case REQUEST_FAILED:
+      console.log('Erro request failed.');
+      return state;
     default:
       return state;
   }

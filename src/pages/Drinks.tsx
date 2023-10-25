@@ -18,7 +18,7 @@ function Drinks() {
       <div className={ styles.list }>
         {loading && (
           <div className={ styles.loading }>
-            <img src={ spinner } alt="loading]" />
+            <img src={ spinner } alt="loading" />
           </div>
         )}
         { drinks.length > 0

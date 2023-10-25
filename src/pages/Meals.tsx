@@ -10,6 +10,8 @@ function Meals() {
   const navigate = useNavigate();
 
   if (meals.length === 1) {
+    console.log(`/meals/${meals[0].idMeal}`);
+
     navigate(`/meals/${meals[0].idMeal}`);
   }
 
@@ -18,7 +20,7 @@ function Meals() {
       <div className={ styles.list }>
         {loading && (
           <div className={ styles.loading }>
-            <img src={ spinner } alt="loading]" />
+            <img src={ spinner } alt="loading" />
           </div>
         )}
         { meals.length > 0

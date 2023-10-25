@@ -5,6 +5,7 @@ import { applyMiddleware, legacy_createStore as createStore, Store } from 'redux
 import { render } from '@testing-library/react';
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
+import { createBrowserHistory } from 'history';
 import rootReducer from '../../redux/reducers';
 
 type Options = {
@@ -14,6 +15,7 @@ type Options = {
 };
 
 function withRouter(component: React.ReactElement, initialEntries: string[]) {
+  window.history.pushState({}, '', initialEntries[0]);
   return (
     <MemoryRouter initialEntries={ initialEntries }>
       { component }
@@ -43,11 +45,12 @@ export function renderWithRedux(component: React.ReactElement, options: Options 
     initialState = {},
     store = createStore(rootReducer, initialState, applyMiddleware(thunk)),
   } = options;
-
+  const history = createBrowserHistory();
   return {
     ...render(withRedux(component, store)),
     store,
     user: userEvent.setup(),
+    history,
   };
 }
 
