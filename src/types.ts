@@ -28,3 +28,8 @@ export type RecipesType = {
   loading: boolean;
   recipeType: string;
 };
+
+export type LoginType = {
+  email: string;
+  password: string;
+};
