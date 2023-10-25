@@ -40,7 +40,7 @@ function Login() {
   };
 
   return (
-    <>
+    <div className={styles.formWrapper}>
       <div className={ styles.imagesContainer }>
         <img src={ logoLogin } className={ styles.logoLogin } alt="Logo" />
         <img src={ tomato } className={ styles.tomato } alt="Tomate" />
@@ -78,7 +78,7 @@ function Login() {
           </button>
         </form>
       </div>
-    </>
+    </div>
   );
 }
 
