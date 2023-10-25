@@ -22,8 +22,14 @@ export type Meal = {
   strMealThumb: string;
 };
 
+export type RecipesType = {
+  drink: Drink[]
+  meal: Meal[]
+  loading: boolean;
+  recipeType: string;
+};
+
 export type LoginType = {
   email: string;
   password: string;
-
 };
