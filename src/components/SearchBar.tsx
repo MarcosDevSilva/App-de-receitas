@@ -6,7 +6,7 @@ import { fetchDrinksFirstLetter, fetchDrinksIngrediant, fetchDrinksName,
   from '../redux/actions/index';
 import { Dispatch } from '../types';
 import styles from '../styles/SearchBar.module.css';
-import { alerMessage1Caracter } from '../utils/alertMessage';
+import { alertMessage1Caracter } from '../utils/alertMessage';
 
 function SearchBar() {
   const [search, setSearch] = useState(
@@ -36,7 +36,7 @@ function SearchBar() {
           if (search.text.length === 1) {
             dispatch(fetchDrinksFirstLetter(search.text));
           } else {
-            alerMessage1Caracter();
+            alertMessage1Caracter();
           }
           break;
       }
@@ -52,7 +52,7 @@ function SearchBar() {
           if (search.text.length === 1) {
             dispatch(fetchMealsFirstLetter(search.text));
           } else {
-            alerMessage1Caracter();
+            alertMessage1Caracter();
           }
           break;
       }

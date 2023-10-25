@@ -1,7 +1,7 @@
 import { AnyAction } from 'redux';
 import { REQUEST_FAILED, REQUEST_LOADING, REQUEST_SUCCESSFUL_DRINKS,
   REQUEST_SUCCESSFUL_MEALS } from '../actions';
-import { alerMessageEmpty } from '../../utils/alertMessage';
+import { alertMessageEmpty } from '../../utils/alertMessage';
 
 const initialState = {
   drinks: [],
@@ -13,7 +13,7 @@ const revenuesReducer = (state = initialState, action: AnyAction) => {
   switch (action.type) {
     case REQUEST_SUCCESSFUL_DRINKS:
       if (action.payload === null) {
-        alerMessageEmpty();
+        alertMessageEmpty();
         return {
           ...state,
           drinks: [],
@@ -25,7 +25,7 @@ const revenuesReducer = (state = initialState, action: AnyAction) => {
       };
     case REQUEST_SUCCESSFUL_MEALS:
       if (action.payload === null) {
-        alerMessageEmpty();
+        alertMessageEmpty();
         return {
           ...state,
           meals: [],
