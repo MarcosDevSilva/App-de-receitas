@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LoginType } from '../types';
+import styles from './styles/login.module.css';
 
 function Login() {
   const [formData, setFormData] = useState<LoginType>({
@@ -37,7 +38,7 @@ function Login() {
   };
 
   return (
-    <form className="login-form" onChange={ handleChange }>
+    <form className={ styles.login } onChange={ handleChange }>
       <div>
         <label htmlFor="email-input">Email</label>
         <input
