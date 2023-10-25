@@ -18,7 +18,7 @@ function Login() {
   };
 
   const passwordValidation = (password: string) => {
-    const regex = /^[a-z0-9]{5,}$/i;
+    const regex = /^[a-z0-9]{6,}$/i;
     return regex.test(password);
   };
 

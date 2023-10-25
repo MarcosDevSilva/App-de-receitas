@@ -16,10 +16,10 @@ describe('Tests for the login page', () => {
     expect(loginButton).toBeInTheDocument();
 
     await userEvent.type(emailInput, 'trybesomething@example.com');
-    await userEvent.type(passwordInput, '123456');
+    await userEvent.type(passwordInput, '1234567');
 
     expect(emailInput).toHaveValue('trybesomething@example.com');
-    expect(passwordInput).toHaveValue('123456');
+    expect(passwordInput).toHaveValue('1234567');
   });
 
   test('false positive', async () => {
@@ -39,7 +39,7 @@ describe('Tests for the login page', () => {
     await userEvent.clear(passwordInput);
 
     await userEvent.type(emailInput, mockEmail);
-    await userEvent.type(passwordInput, '123456');
+    await userEvent.type(passwordInput, '1234567');
 
     expect(loginButton).toBeEnabled();
 
