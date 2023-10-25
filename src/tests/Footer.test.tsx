@@ -18,6 +18,6 @@ test('01 - Os componentes redenrizam na tela', () => {
 
 //   await userEvent.click(drinksBtn);
 //   // expect()).toBe('/drinks');
-//   await userEvent.click(MealsBrt);
+//   await userEvent.click(MealsBrt);`
 //   expect(route.location.pathname).toBe('/meals');
 // });
