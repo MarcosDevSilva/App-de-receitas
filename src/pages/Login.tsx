@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { LoginType } from '../types';
 
 function Login() {
-  // const navigate = useNavigate();
 
   const [formData, setFormData] = useState<LoginType>({
     email: '',
@@ -30,8 +29,13 @@ function Login() {
     }
   };
 
+  const handleClick = () => {
+    const email = formData.email;
+    localStorage.setItem('user', JSON.stringify({ email }));
+  };
+
   return (
-    <form className="login-form" onChange={ handleChange }>
+    <div className="login-form" onChange={ handleChange }>
       <div>
         <label htmlFor="email-input">Email</label>
         <input
@@ -56,12 +60,12 @@ function Login() {
       </div>
       <button
         data-testid="login-submit-btn"
-        // onClick={ handleClick }
+        onClick={ handleClick }
         disabled={ !formValid }
       >
         Enter
       </button>
-    </form>
+    </div>
   );
 }
 
