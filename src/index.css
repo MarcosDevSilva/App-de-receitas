@@ -1,13 +1,79 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+:root {
+  /* VARIAVEIS */
+  --white: #fff;
+
+  --yellow: #FCC436;
+  
+  --purple: #41197F;
+  
+  --black: #1A1B1C;
+  
+  --gray: #797D86;
+
+  --gray_b: #b1b1b1;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+* {
+ /* RESET */
+  box-sizing: border-box;
+  font-size: 1rem;
+  margin: 0;
+  padding: 0;
+  font-family: Epilogue,  sans-serif;
 }
+
+/* ESTILIZAÇÃO GERAL */
+body {
+  background-color: var(--white);
+  color: var(--black);
+}
+
+h1 {
+  font-size: 1.25rem;
+  color: var(--purple);
+}
+
+button {
+
+  /* COLORAÇÃO */
+  background-color: var(--yellow);
+  border: none;
+
+  /* BORDAS */
+  border-radius: 0.3125rem;
+
+  /* COMPORTAMENTO/ANIMAÇÃO */
+  cursor: pointer;
+
+  /* DIMENSIONAMENTO */
+  height: 2.75rem;
+  margin-top: 1rem;
+
+  /* ESPACAMENTO */
+  padding: 0.5rem;
+  transition: background 200ms ease-in-out 0.025s;
+  width: 100%;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+a {
+
+  /* TIPOGRAFIA */
+  text-decoration: none;
+
+  /* COMPORTAMENTO/ANIMAÇÃO */
+  transition: color 200ms ease-in-out 0.025s;
+}
+
+a:hover {
+
+  /* TIPOGRAFIA */
+  text-decoration: underline;
+  
+  /* COMPORTAMENTO/ANIMAÇÃO */
+  cursor: pointer;
+}
+

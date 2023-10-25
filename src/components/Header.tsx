@@ -3,6 +3,7 @@ import { useState } from 'react';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
+import styles from '../styles/Header.module.css';
 
 export default function Header() {
   const [searchBar, setSearchBar] = useState(false);
@@ -36,7 +37,9 @@ export default function Header() {
           <button onClick={ () => setSearchBar(!searchBar) }>
             <img src={ searchIcon } alt="search icon" data-testid="search-top-btn" />
           </button>
-          {searchBar && <SearchBar /> }
+          <div className={ styles.search_bar }>
+            {searchBar && <SearchBar /> }
+          </div>
         </div>
       )
       }
