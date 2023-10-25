@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LoginType } from '../types';
 import styles from './styles/login.module.css';
+import logoLogin from '../images/logo-login.svg';
+import tomato from '../images/tomate.png';
 
 function Login() {
   const [formData, setFormData] = useState<LoginType>({
@@ -38,38 +40,45 @@ function Login() {
   };
 
   return (
-    <form className={ styles.login } onChange={ handleChange }>
-      <div>
-        <label htmlFor="email-input">Email</label>
-        <input
-          type="email"
-          name="email-input"
-          data-testid="email-input"
-          placeholder="Email"
-          value={ formData.email }
-          onChange={ (e) => setFormData({ ...formData, email: e.target.value }) }
-        />
+    <>
+      <div className={ styles.imagesContainer }>
+        <img src={ logoLogin } className={ styles.logoLogin } alt="Logo" />
+        <img src={ tomato } className={ styles.tomato } alt="Tomate" />
       </div>
-      <div>
-        <label htmlFor="email-input">Password</label>
-        <input
-          type="password"
-          name="password-input"
-          data-testid="password-input"
-          placeholder="Password"
-          value={ formData.password }
-          onChange={ (e) => setFormData({ ...formData, password: e.target.value }) }
-        />
+      <div className={ styles.loginContainer }>
+        <form className={ styles.login } onChange={ handleChange }>
+          <h1>LOGIN</h1>
+          <div>
+            <input
+              type="email"
+              name="email-input"
+              data-testid="email-input"
+              placeholder="Email"
+              value={ formData.email }
+              onChange={ (e) => setFormData({ ...formData, email: e.target.value }) }
+            />
+          </div>
+          <div>
+            <input
+              type="password"
+              name="password-input"
+              data-testid="password-input"
+              placeholder="Password"
+              value={ formData.password }
+              onChange={ (e) => setFormData({ ...formData, password: e.target.value }) }
+            />
+          </div>
+          <button
+            data-testid="login-submit-btn"
+            onClick={ handleClick }
+            disabled={ !formValid }
+            type="submit"
+          >
+            Enter
+          </button>
+        </form>
       </div>
-      <button
-        data-testid="login-submit-btn"
-        onClick={ handleClick }
-        disabled={ !formValid }
-        type="submit"
-      >
-        Enter
-      </button>
-    </form>
+    </>
   );
 }
 
