@@ -65,3 +65,9 @@ header {
   margin-bottom: 13.47px;
   width: 40.334px;
 }
+
+.search_bar {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}

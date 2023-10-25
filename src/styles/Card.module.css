@@ -1,0 +1,23 @@
+.card {
+  border: 0.518px solid var(--gray_b);
+  border-radius: 0.312rem;
+  height: 10.682rem;
+  margin: 0.1rem;
+  width: 10.2rem;
+}
+
+.img {
+  background: lightgray -16.505px -36.361px / 157.194% 126.964% no-repeat;
+  border-radius: 0.312rem 0.312rem 0 0;
+  height: 8.428rem;
+  width: 10rem;
+}
+
+.h3 {
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding-left: 1rem;
+  text-align: start;
+}

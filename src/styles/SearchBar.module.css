@@ -1,0 +1,61 @@
+.form {
+  align-items: center;
+  background: var(--purple);
+  border-radius: 0.625rem;
+  display: flex;
+  flex-direction: column;
+  width: 21.125rem;
+}
+
+.search {
+  background: var(var(--white));
+  border: 1px solid  var(--gray_b);
+  border-radius: 0.312rem;
+  color: var(--gray);
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 300;
+  height: 2.5rem;
+  line-height: normal;
+  padding-left: 0.4rem;
+  width: 21.125rem;
+}
+
+.div_radios {
+  color: var(--white);
+  height: 5.5rem;
+}
+
+.radios {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem;
+}
+
+.div_each_radio {
+  align-items: center;
+  display: flex;
+}
+
+.radio {
+  margin-right: 0.2rem;
+}
+
+.label {
+  font-size: 0.562rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.button {
+  color: var(--white);
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 700;
+  height: 1.562rem;
+  letter-spacing: 0.022rem;
+  line-height: normal;
+  padding: 0;
+  width: 13.009rem;
+}

@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux';
+import revenuesReducer from './revenuesReducer';
 
-const rootReducer = combineReducers({
-  // colocar reducers aqui
+const reducers = combineReducers({
+  revenues: revenuesReducer,
 });
 
-export default rootReducer;
+export default reducers;

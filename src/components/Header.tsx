@@ -56,9 +56,11 @@ export default function Header() {
       </div>
       <div className={ styles.titleContainer }>
         <img src={ icon } alt="page icon" />
-        <h1 className={ styles.title } data-testid="page-title">{title}</h1>
+        <h1 data-testid="page-title">{title}</h1>
       </div>
-      {searchBar && <SearchBar /> }
+      <div className={ styles.search_bar }>
+        {searchBar && <SearchBar /> }
+      </div>
     </header>
   );
 }
