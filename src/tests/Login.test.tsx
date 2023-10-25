@@ -1,16 +1,10 @@
 import userEvent from '@testing-library/user-event';
-import { render, screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { screen } from '@testing-library/react';
+import { renderWithRouter } from '../utils/renderWithRouter';
 import Login from '../pages/Login';
 
 describe('Tests for the login page', () => {
-  beforeEach(() => {
-    render(
-      <BrowserRouter>
-        <Login />
-      </BrowserRouter>,
-    );
-  });
+  renderWithRouter(<Login />);
 
   test('Tests section', async () => {
     const emailInput = screen.getByTestId('email-input');
@@ -29,6 +23,9 @@ describe('Tests for the login page', () => {
   });
 
   test('false positive', async () => {
+    renderWithRouter(<Login />);
+    const mockEmail = 'trybesome@gmail.com';
+
     const emailInput = screen.getByTestId('email-input');
     const passwordInput = screen.getByTestId('password-input');
     const loginButton = screen.getByTestId('login-submit-btn');
@@ -37,9 +34,18 @@ describe('Tests for the login page', () => {
 
     expect(loginButton).toBeDisabled();
 
-    await userEvent.type(emailInput, 'trybesome@example.com');
+    // Clear all inputs
+    await userEvent.clear(emailInput);
+    await userEvent.clear(passwordInput);
+
+    await userEvent.type(emailInput, mockEmail);
     await userEvent.type(passwordInput, '123456');
 
     expect(loginButton).toBeEnabled();
+
+    await userEvent.click(loginButton);
+
+    // expect localStorage to have a key user with the value of mockEmail
+    expect(localStorage.getItem('user')).toBe(JSON.stringify({ email: mockEmail }));
   });
 });
