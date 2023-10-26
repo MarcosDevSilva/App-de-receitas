@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import YouTube from 'react-youtube';
 import ReactPlayer from 'react-player/youtube';
+import Icon from '../components/Icon';
+import styles from '../styles/RecipeDetails.module.css';
 
 export default function RecipeDetails() {
   const param = useParams();
@@ -14,6 +16,7 @@ export default function RecipeDetails() {
       strDrink: '',
       strInstructions: '',
       strYoutube: '',
+      strCategory: '',
     },
   );
   const [type, setType] = useState('');
@@ -48,8 +51,9 @@ export default function RecipeDetails() {
     fetchDetails();
   }, []);
 
-  const ingredients = Object.keys(details).filter((key) => key.includes('strIngredient')
-   && details[key] !== null);
+  const ingredients = Object.keys(details)
+    .filter((key) => key.includes('strIngredient')
+   && details[key] !== '');
 
   const opts = {
     height: '350',
@@ -64,59 +68,68 @@ export default function RecipeDetails() {
               src={ type === 'meal' ? details?.strMealThumb : details.strDrinkThumb }
               alt="meal thumb"
               data-testid="recipe-photo"
+              className={ styles.photo }
             />
             <div>
-              {/* <img src={ icon } alt="icon" />
+              <Icon category={ details.strCategory } />
+              {/* <img src={ icon } alt="icon" /> */}
               <span data-testid="recipe-category">{details.strCategory}</span>
-              <img src={ shareIcon } alt="share icon" />
+              {/* <img src={ shareIcon } alt="share icon" />
               <button>
                 <img src={ favIcon } alt="heart" />
       </button> */}
             </div>
-            <h1>{ type === 'meal' ? details.strMeal : details.strDrink }</h1>
+            <h1
+              data-testid="recipe-title"
+              className={ styles.title }
+            >
+              { type === 'meal' ? details.strMeal : details.strDrink }
+            </h1>
           </header>
-          <main>
-            <section>
-              <h2>Ingredients</h2>
-              <div>
-                {ingredients.map((element, index) => (
-                  <p
+          <main className={ styles.main }>
+            <section className={ styles.section }>
+              <h2 className={ styles.h2 }>Ingredients</h2>
+              <ul className={ styles.ul }>
+                { ingredients.map((element, index) => (
+                  <li
                     data-testid={ `${index}-ingredient-name-and-measure` }
                     key={ element }
                   >
                     { details[element] }
-                  </p>))}
-              </div>
+                  </li>
+                ))}
+              </ul>
             </section>
-            <section>
-              <h2>Instructions</h2>
-              <div>
+            <section className={ styles.section }>
+              <h2 className={ styles.h2 }>Instructions</h2>
+              <div className={ styles.p }>
                 <p data-testid="instructions">{details.strInstructions }</p>
                 {/* TO DO instruções */}
               </div>
             </section>
             { pathname.includes('meals') && (
-              <>
+              <section className={ styles.video }>
+                <h2 className={ styles.h2 }>Video</h2>
                 {/* <section>
                 <h2>Video</h2>
                 <video src={ details.s } data-testid="video" />
               </section> */}
-                <YouTube
+                {/* <YouTube
                   videoId={ details.strYoutube.split('=')[1] }
                   data-testid="video"
                   opts={ opts }
-                />
+            /> */}
                 <ReactPlayer
                   url={ details.strYoutube }
                   controls
-                  width="350px"
-                  height="350px"
+                  width="21rem"
+                  height="12.81819rem"
+                  data-testid="video"
                 />
-
-              </>
+              </section>
             )}
             <section>
-              <h2>Recommended</h2>
+              <h2 className={ styles.h2 }>Recommended</h2>
               {/* TO DO receitas recomendadas */}
             </section>
             <button>Start Recipe</button>
