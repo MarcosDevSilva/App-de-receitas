@@ -15,7 +15,7 @@
   text-transform: uppercase;
 }
 
-.h2 {
+h2 {
   font-size: 1.25rem;
   font-style: normal;
   font-weight: 700;
@@ -24,19 +24,19 @@
   margin-top: 2rem;
 }
 
-.main {
+main {
   align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.section {
+section {
   margin-bottom: 0.5rem;
   width: 20.937rem;
 }
 
-.ul {
+ul {
   border: 0.554px solid var(--gray_b);
   border-radius: 0.334rem;
   color: var(--black);
@@ -48,7 +48,7 @@
   padding: 1.05rem 1.05rem 1.05rem 2rem;
 }
 
-.p {
+p {
   border: 0.554px solid var(--gray_b);
   border-radius: 0.334rem;
   color: var(--black);
