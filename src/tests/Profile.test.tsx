@@ -21,24 +21,21 @@ describe('profile page', () => {
     renderWithRouter(<Profile />);
     const profileDoneBtn = screen.getByTestId('profile-done-btn');
     await userEvent.click(profileDoneBtn);
-    const doneRecipesTitle = screen.getByTestId('page-title');
-    expect(doneRecipesTitle).toBeInTheDocument();
+    expect(window.location.pathname).toBe('/done-recipes');
   });
 
   test('test if the second button redirects to favorite recipes page', async () => {
     renderWithRouter(<Profile />);
     const profileFavoriteBtn = screen.getByTestId('profile-favorite-btn');
     await userEvent.click(profileFavoriteBtn);
-    const favoriteRecipesTitle = screen.getByTestId('page-title');
-    expect(favoriteRecipesTitle).toBeInTheDocument();
+    expect(window.location.pathname).toBe('/favorite-recipes');
   });
 
   test('test if the third button redirects to login page', async () => {
     renderWithRouter(<Profile />);
     const profileLogoutBtn = screen.getByTestId('profile-logout-btn');
     await userEvent.click(profileLogoutBtn);
-    const loginTitle = screen.getByText(/login/i);
-    expect(loginTitle).toBeInTheDocument();
+    expect(window.location.pathname).toBe('/');
   });
 
   test('should render the email from localStorage', () => {
