@@ -3,6 +3,7 @@ import { useLocation, useParams } from 'react-router-dom';
 import ReactPlayer from 'react-player/youtube';
 import Icon from '../components/Icon';
 import styles from '../styles/RecipeDetails.module.css';
+import Recommendations from '../components/Recommendations';
 
 export default function RecipeDetails() {
   const { id } = useParams();
@@ -29,6 +30,7 @@ export default function RecipeDetails() {
           const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
           const data = await response.json();
           setDetails(data.drinks[0]);
+          console.log(data.drinks[0]);
         } catch (error:any) {
           throw new Error(`Failed to fetch: ${error.message}`);
         }
@@ -58,12 +60,10 @@ export default function RecipeDetails() {
         />
         <div className={ styles.categoryContainer }>
           <Icon category={ details.strCategory } />
-          <span
-            data-testid="recipe-category"
-          >
-            {details.strCategory}
-
-          </span>
+          {/* <img src={ icon } alt="" /> */}
+          <h3 data-testid="recipe-category">
+            {isMeal ? details.strCategory : details.strAlcoholic}
+          </h3>
           {/* <img src={ shareIcon } alt="share icon" /> */}
           {/* <button>
             <img src={ favIcon } alt="heart" />
@@ -114,7 +114,7 @@ export default function RecipeDetails() {
         )}
         <section>
           <h2>Recommended</h2>
-          {/* TO DO receitas recomendadas */}
+          <Recommendations />
         </section>
         <button>Start Recipe</button>
       </main>

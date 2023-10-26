@@ -14,6 +14,7 @@
 }
 
 .h3 {
+  color: var(--black);
   font-size: 0.75rem;
   font-style: normal;
   font-weight: 400;
