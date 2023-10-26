@@ -1,5 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import styles from './styles/Profile.module.css';
+import doneRecipes from '../images/done-recipes.svg';
+import favoriteRecipesIcon from '../images/favorite-icon.svg';
+import logoutIcon from '../images/logoutIcon.svg';
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -22,28 +25,47 @@ export default function Profile() {
           {userJSON && userJSON.email}
         </h1>
       </div>
-      <div>
+      <div className={ styles.btnsContainer }>
         <button
           type="button"
           data-testid="profile-done-btn"
           onClick={ () => { navigate('/done-recipes'); } }
           className={ styles.doneRecipes }
         >
-          Done Recipes
+          <img src={ doneRecipes } className={ styles.logoDoneRecipes } alt="Logo" />
+          <span className={ styles.spanBtn }>
+            Done Recipes
+          </span>
         </button>
         <button
           type="button"
           data-testid="profile-favorite-btn"
           onClick={ () => { navigate('/favorite-recipes'); } }
+          className={ styles.favoriteRecipes }
         >
-          Favorite Recipes
+          <img
+            src={ favoriteRecipesIcon }
+            className={ styles.favRecipesIcon }
+            alt="Logo"
+          />
+          <span className={ styles.spanBtn }>
+            Favorite Recipes
+          </span>
         </button>
         <button
           type="button"
           data-testid="profile-logout-btn"
           onClick={ handleLogout }
+          className={ styles.logoutBtn }
         >
-          Logout
+          <img
+            src={ logoutIcon }
+            className={ styles.logoutIcon }
+            alt="Logo"
+          />
+          <span className={ styles.spanBtn }>
+            Logout
+          </span>
         </button>
       </div>
     </div>

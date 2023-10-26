@@ -11,6 +11,13 @@
     width: 100%;
   }
 
+  .btnsContainer {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-top: 30px;
+  }
 
   .email {
     color: var(--black);
@@ -26,16 +33,78 @@
   }
 
   .doneRecipes {
+    align-items: center;
     background-color: var(--white);
     color: var(--gray);
+    display: flex;
     font-family: Epilogue , sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
     height: 50px;
+    justify-content: flex-start;
     letter-spacing: 0.48px;
     line-height: normal;
+    margin: 10px;
     text-transform: capitalize;
     width: 90%;
+  }
+
+  .logoDoneRecipes {
+    flex-shrink: 0;
+    height: 30px;
+    width: 30px;
+  }
+
+  .favoriteRecipes {
+    align-items: center;
+    background-color: var(--white);
+    color: var(--gray);
+    display: flex;
+    font-family: Epilogue , sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    height: 50px;
+    justify-content: flex-start;
+    letter-spacing: 0.48px;
+    line-height: normal;
+    margin: 10px;
+    text-transform: capitalize;
+    width: 90%;
+  }
+
+  .favRecipesIcon {
+    flex-shrink: 0;
+    height: 30px;
+    width: 30px;
+  }
+
+  .logoutBtn {
+    align-items: center;
+    background-color: var(--white);
+    color: var(--gray);
+    display: flex;
+    font-family: Epilogue , sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    height: 50px;
+    justify-content: flex-start;
+    letter-spacing: 0.48px;
+    line-height: normal;
+    margin: 10px;
+    text-transform: capitalize;
+    width: 90%;
+  }
+
+  .logoutIcon {
+    flex-shrink: 0;
+    height: 30px;
+    width: 30px;
+  }
+
+  .spanBtn {
+    margin-left: 10px;
   }
 }
