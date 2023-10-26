@@ -51,7 +51,7 @@ export default function RecipeDetails() {
 
   return (
     <>
-      <header>
+      <header className={ styles.headerDetails }>
         <img
           src={ isMeal ? details.strMealThumb : details.strDrinkThumb }
           alt="meal thumb"
