@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import styles from './styles/Profile.module.css';
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -14,13 +15,19 @@ export default function Profile() {
   return (
     <div>
       <div>
-        <h1 data-testid="profile-email">{userJSON && userJSON.email}</h1>
+        <h1
+          data-testid="profile-email"
+          className={ styles.email }
+        >
+          {userJSON && userJSON.email}
+        </h1>
       </div>
       <div>
         <button
           type="button"
           data-testid="profile-done-btn"
           onClick={ () => { navigate('/done-recipes'); } }
+          className={ styles.doneRecipes }
         >
           Done Recipes
         </button>
