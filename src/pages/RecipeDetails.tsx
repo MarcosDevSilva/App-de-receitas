@@ -8,17 +8,7 @@ export default function RecipeDetails() {
   const { id } = useParams();
   const { pathname } = useLocation();
 
-  const [details, setDetails] = useState(
-    {
-      strMealThumb: '',
-      strDrinkThumb: '',
-      strMeal: '',
-      strDrink: '',
-      strInstructions: '',
-      strYoutube: '',
-      strCategory: '',
-    },
-  );
+  const [details, setDetails] = useState<any>({});
 
   const isMeal: boolean = pathname.includes('/meals');
 
