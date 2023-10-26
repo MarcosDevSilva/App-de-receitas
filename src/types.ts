@@ -6,6 +6,7 @@ export type GlobalState = {
     drinks: Drink[];
     meals: Meal[];
     loading: boolean;
+    caller: string;
   }
 };
 export type Dispatch = ThunkDispatch<GlobalState, null, AnyAction>;

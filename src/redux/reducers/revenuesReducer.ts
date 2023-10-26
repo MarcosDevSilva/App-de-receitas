@@ -7,6 +7,7 @@ const initialState = {
   drinks: [],
   meals: [],
   loading: false,
+  caller: '',
 };
 
 const revenuesReducer = (state = initialState, action: AnyAction) => {
@@ -17,6 +18,11 @@ const revenuesReducer = (state = initialState, action: AnyAction) => {
         return {
           ...state,
           drinks: [],
+        };
+      }
+      if (action.payload.length === 1) {
+        return {
+          ...state, drinks: action.payload, caller: action.caller,
         };
       }
       return {
@@ -31,6 +37,11 @@ const revenuesReducer = (state = initialState, action: AnyAction) => {
           meals: [],
         };
       }
+      if (action.payload.length === 1) {
+        return {
+          ...state, meals: action.payload, caller: action.caller,
+        };
+      }
       return {
         ...state,
         meals: action.payload.slice(0, 12),
@@ -41,6 +52,7 @@ const revenuesReducer = (state = initialState, action: AnyAction) => {
         loading: action.payload,
         drinks: [],
         meals: [],
+        caller: '',
       };
     case REQUEST_FAILED:
       console.log('Erro request failed.');

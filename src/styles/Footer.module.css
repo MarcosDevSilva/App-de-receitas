@@ -1,19 +1,20 @@
 .container {
   align-items: center;
-  background-color: #41197f;
+  background-color: var(--purple);
   bottom: 0;
   display: flex;
-
-  /* trocar por var */
-  height: 52px;
+  height: 43px;
   justify-content: space-around;
   position: fixed;
   width: 360px;
 }
 
 .icon {
+  height: 28px;
+  width: 28px;
+}
+
+.iconDrinks {
   filter: invert(82%) sepia(61%) saturate(1973%) hue-rotate(330deg)
     brightness(110%) contrast(110%);
-  height: 30px;
-  width: 30px;
 }

@@ -7,10 +7,11 @@
 .list {
   display: flex;
   flex-wrap: wrap;
-  height: 32.638rem;
+  height: 377px;
+  justify-content: center;
   margin-top: 1rem;
   overflow-y: auto;
-  width: 21.021rem;
+  width: 360px;
 }
 
 .loading {
