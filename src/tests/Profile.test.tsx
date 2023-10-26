@@ -4,6 +4,10 @@ import { renderWithRouter } from '../utils/renderWithRouter';
 import Profile from '../pages/Profile';
 
 describe('profile page', () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
   test('should render profile page', () => {
     renderWithRouter(<Profile />);
     const profileEmail = screen.getByTestId('profile-email');
