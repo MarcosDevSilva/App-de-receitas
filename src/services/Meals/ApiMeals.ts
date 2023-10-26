@@ -13,3 +13,15 @@ export const
   searchMealsFirstLetter = (letter: string) => fetch(`${api}search.php?f=${letter}`)
     .then((response) => response.json())
     .then((data) => data);
+
+export const
+  searchMealsCategories = () => fetch(`${api}list.php?c=list`)
+    .then((response) => response.json())
+    .then((data) => data);
+
+export const
+  searchMealsPerCategorie = (categorie: string) => fetch(
+    `${api}filter.php?c=${categorie}`,
+  )
+    .then((response) => response.json())
+    .then((data) => data);

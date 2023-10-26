@@ -1,7 +1,9 @@
 import { searchDrinksFirstLetter, searchDrinksIngredients,
-  searchDrinksName } from '../../services/Drinks/ApiDrinks';
+  searchDrinksName,
+  searchDrinksPerCategorie } from '../../services/Drinks/ApiDrinks';
 import { searchMealsIngredients, searchMealsName,
-  searchMealsFirstLetter } from '../../services/Meals/ApiMeals';
+  searchMealsFirstLetter,
+  searchMealsPerCategorie } from '../../services/Meals/ApiMeals';
 import { Dispatch } from '../../types';
 
 export const REQUEST_STARTED = 'REQUEST_STARTED';
@@ -12,14 +14,16 @@ export const REQUEST_LOADING = 'REQUEST_LOADING';
 
 const requestStarted = () => ({ type: REQUEST_STARTED });
 
-const requestSuccessfulMeals = (payload: Array<object>) => ({
+const requestSuccessfulMeals = (payload: Array<object>, caller: string = '') => ({
   type: REQUEST_SUCCESSFUL_MEALS,
   payload,
+  caller,
 });
 
-const requestSuccessfulDrinks = (payload: Array<object>) => ({
+const requestSuccessfulDrinks = (payload: Array<object>, caller: string = '') => ({
   type: REQUEST_SUCCESSFUL_DRINKS,
   payload,
+  caller,
 });
 
 const requestFailed = () => ({
@@ -120,6 +124,38 @@ export const fetchMealsFirstLetter = (letter: string) => {
         .then((response) => {
           dispatch(loadingAction(false));
           dispatch(requestSuccessfulMeals(response.meals));
+        });
+    } catch (error: any) {
+      dispatch(requestFailed());
+    }
+  };
+};
+
+export const fetchCategoriesDrinks = (categories: string, caller : string) => {
+  return async (dispatch: Dispatch) => {
+    try {
+      dispatch(loadingAction(true));
+      dispatch(requestStarted());
+      searchDrinksPerCategorie(categories)
+        .then((response) => {
+          dispatch(loadingAction(false));
+          dispatch(requestSuccessfulDrinks(response.drinks, caller));
+        });
+    } catch (error: any) {
+      dispatch(requestFailed());
+    }
+  };
+};
+
+export const fetchCategoriesMeals = (categories: string, caller : string) => {
+  return async (dispatch: Dispatch) => {
+    try {
+      dispatch(loadingAction(true));
+      dispatch(requestStarted());
+      searchMealsPerCategorie(categories)
+        .then((response) => {
+          dispatch(loadingAction(false));
+          dispatch(requestSuccessfulMeals(response.meals, caller));
         });
     } catch (error: any) {
       dispatch(requestFailed());
