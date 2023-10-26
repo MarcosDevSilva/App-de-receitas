@@ -56,10 +56,14 @@ export default function RecipeDetails() {
           data-testid="recipe-photo"
           className={ styles.photo }
         />
-        <div>
+        <div className={ styles.categoryContainer }>
           <Icon category={ details.strCategory } />
-          {/* <img src={ icon } alt="" /> */}
-          <span data-testid="recipe-category">{details.strCategory}</span>
+          <span
+            data-testid="recipe-category"
+          >
+            {details.strCategory}
+
+          </span>
           {/* <img src={ shareIcon } alt="share icon" /> */}
           {/* <button>
             <img src={ favIcon } alt="heart" />

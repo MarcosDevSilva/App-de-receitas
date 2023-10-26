@@ -65,9 +65,7 @@ function Icon({ category }: IconType) {
   }
 
   return (
-    <div>
-      <img src={ icon } alt="icon" />
-    </div>
+    <img src={ icon } alt="icon" />
   );
 }
 
