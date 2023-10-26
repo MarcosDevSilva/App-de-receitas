@@ -55,10 +55,15 @@ export default function RecipeDetails() {
     .filter((key) => key.includes('strIngredient')
    && details[key] !== '');
 
+  const measures = Object.keys(details)
+    .filter((key) => key.includes('strMeasure')
+   && details[key] !== '');
+
   const opts = {
     height: '350',
     width: '350',
   };
+
   return (
     <div>
       { type !== '' && (
@@ -95,7 +100,7 @@ export default function RecipeDetails() {
                     data-testid={ `${index}-ingredient-name-and-measure` }
                     key={ element }
                   >
-                    { details[element] }
+                    { `${details[measures[index]]} ${details[element]}` }
                   </li>
                 ))}
               </ul>
