@@ -50,4 +50,13 @@ describe('profile page', () => {
     expect(localStorage.getItem('user')).toBe(JSON.stringify({ email: mockEmail }));
     expect(profileEmail.innerHTML).toBe(mockEmail);
   });
+
+  test('should clear localStorage when logout button is clicked', async () => {
+    const mockEmail = 'test123@gmail.com';
+    localStorage.setItem('user', JSON.stringify({ email: mockEmail }));
+    renderWithRouter(<Profile />);
+    const profileLogoutBtn = screen.getByTestId(/profile-logout-btn/i);
+    await userEvent.click(profileLogoutBtn);
+    expect(localStorage.getItem('user')).toBe(null);
+  });
 });
