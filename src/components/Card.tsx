@@ -1,22 +1,26 @@
+import { Link } from 'react-router-dom';
 import styles from '../styles/Card.module.css';
 
 type CardType = {
   img: string;
   name: string;
   index: number;
+  id: string;
 };
 
-function Card({ img, name, index }: CardType) {
+function Card({ img, name, index, id }: CardType) {
   return (
-    <div data-testid={ `${index}-recipe-card` } className={ styles.card }>
-      <img
-        src={ img }
-        alt=""
-        data-testid={ `${index}-card-img` }
-        className={ styles.img }
-      />
-      <h3 data-testid={ `${index}-card-name` } className={ styles.h3 }>{ name }</h3>
-    </div>
+    <Link to={ id }>
+      <div data-testid={ `${index}-recipe-card` } className={ styles.card }>
+        <img
+          src={ img }
+          alt=""
+          data-testid={ `${index}-card-img` }
+          className={ styles.img }
+        />
+        <h3 data-testid={ `${index}-card-name` } className={ styles.h3 }>{ name }</h3>
+      </div>
+    </Link>
   );
 }
 
