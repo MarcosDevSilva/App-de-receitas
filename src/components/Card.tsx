@@ -14,7 +14,7 @@ function Card({ img, name, index, id }: CardType) {
       <div data-testid={ `${index}-recipe-card` } className={ styles.card }>
         <img
           src={ img }
-          alt=""
+          alt={ name }
           data-testid={ `${index}-card-img` }
           className={ styles.img }
         />

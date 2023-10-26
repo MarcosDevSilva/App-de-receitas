@@ -4,6 +4,7 @@ import YouTube from 'react-youtube';
 import ReactPlayer from 'react-player/youtube';
 import Icon from '../components/Icon';
 import styles from '../styles/RecipeDetails.module.css';
+import Recommendations from '../components/Recommendations';
 
 export default function RecipeDetails() {
   const param = useParams();
@@ -49,7 +50,7 @@ export default function RecipeDetails() {
     };
 
     fetchDetails();
-  }, []);
+  }, [param.id]);
 
   const ingredients = Object.keys(details)
     .filter((key) => key.includes('strIngredient')
@@ -135,7 +136,7 @@ export default function RecipeDetails() {
             )}
             <section>
               <h2 className={ styles.h2 }>Recommended</h2>
-              {/* TO DO receitas recomendadas */}
+              <Recommendations />
             </section>
             <button>Start Recipe</button>
           </main>

@@ -13,3 +13,7 @@ export const
   searchMealsFirstLetter = (letter: string) => fetch(`${api}search.php?f=${letter}`)
     .then((response) => response.json())
     .then((data) => data);
+
+export const searchMealsRecommendations = () => fetch(`${api}/search.php?s=`)
+  .then((response) => response.json())
+  .then((data) => data);
