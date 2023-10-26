@@ -1,5 +1,6 @@
 .container {
   display: flex;
+  margin-top: 0.4rem;
   overflow-x: auto;
-  width: 21rem;
+  width: 20.7rem;
 }

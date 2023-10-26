@@ -14,6 +14,6 @@ export const
     .then((response) => response.json())
     .then((data) => data);
 
-export const searchMealsRecommendations = () => fetch(`${api}/search.php?s=`)
+export const searchMealsRecommendations = () => fetch(`${api}search.php?s=`)
   .then((response) => response.json())
   .then((data) => data);

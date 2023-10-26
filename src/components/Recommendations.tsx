@@ -21,7 +21,7 @@ function Recommendations() {
   ]);
 
   useEffect(() => {
-    if (window.location.pathname.includes('meal')) {
+    if (!window.location.pathname.includes('meals')) {
       searchMealsRecommendations()
         .then((response) => setRecommendationsMeals(response.meals.slice(0, 6)));
     } else {
@@ -32,7 +32,7 @@ function Recommendations() {
 
   return (
     <div className={ styles.container }>
-      { window.location.pathname.includes('meal')
+      { !window.location.pathname.includes('meals')
        && recommendationsMeals.map(({ idMeal, strMeal, strMealThumb }, index) => (
          <CardRecommendations
            key={ idMeal }
@@ -42,7 +42,7 @@ function Recommendations() {
            url={ `/meals/${idMeal}` }
          />
        ))}
-      {!window.location.pathname.includes('meal')
+      { window.location.pathname.includes('meal')
        && recommendationsDrinks.map(({ idDrink, strDrink, strDrinkThumb }, index) => (
          <CardRecommendations
            key={ idDrink }
