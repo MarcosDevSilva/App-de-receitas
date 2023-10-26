@@ -53,11 +53,11 @@ export default function RecipeDetails() {
 
   const ingredients = Object.keys(details)
     .filter((key) => key.includes('strIngredient')
-   && details[key] !== '');
+   && (details[key] !== '' || details[key] !== null));
 
   const measures = Object.keys(details)
     .filter((key) => key.includes('strMeasure')
-   && details[key] !== '');
+   && (details[key] !== '' || details[key] !== null));
 
   const opts = {
     height: '350',
