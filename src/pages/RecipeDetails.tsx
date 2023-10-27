@@ -87,6 +87,11 @@ export default function RecipeDetails() {
     .filter((key) => key.includes('Measure'))
     .map((key) => details[key]);
 
+  const handleClick = () => {
+    return isMeal ? navigate(`/meals/${id}/in-progress`)
+      : navigate(`/drinks/${id}/in-progress`);
+  };
+
   if (isLoading) {
     return (
       <div className={ styles.loading }>
@@ -95,10 +100,6 @@ export default function RecipeDetails() {
     );
   }
 
-  const handleClick = () => {
-    return isMeal ? navigate(`/meals/${id}/in-progress`)
-      : navigate(`/drinks/${id}/in-progress`);
-  };
   return (
     <>
       <header className={ styles.headerDetails }>
@@ -113,8 +114,13 @@ export default function RecipeDetails() {
           <h3 data-testid="recipe-category">
             {isMeal ? details.strCategory : details.strAlcoholic}
           </h3>
-          <img src={ shareIcon } alt="share icon" className={ styles.shareIcon } />
-          <img src={ favIcon } alt="heart" />
+          <img
+            src={ shareIcon }
+            alt="share icon"
+            className={ styles.shareIcon }
+            data-testid="share-btn"
+          />
+          <img src={ favIcon } alt="heart" data-testid="favorite-btn" />
         </div>
         <h1
           data-testid="recipe-title"
