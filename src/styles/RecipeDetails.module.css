@@ -113,3 +113,10 @@ p {
   bottom: 0%;
   position: fixed;
 }
+
+.loading {
+  align-items: center;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+}

@@ -4,6 +4,7 @@ import ReactPlayer from 'react-player/youtube';
 import Icon from '../components/Icon';
 import styles from '../styles/RecipeDetails.module.css';
 import Recommendations from '../components/Recommendations';
+import loading from '../images/spinner.svg';
 import shareIcon from '../images/shareIcon.svg';
 import favIcon from '../images/favIcon.svg';
 import { LocalDataType } from '../types';
@@ -32,6 +33,7 @@ export default function RecipeDetails() {
   const isDone: boolean = localData.doneRecipes
   && localData.doneRecipes.some((recipe) => recipe.id === id);
   const isMeal: boolean = pathname.includes('/meals');
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -40,6 +42,7 @@ export default function RecipeDetails() {
           const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
           const data = await response.json();
           setDetails(data.meals[0]);
+          setIsLoading(false);
           setLoading(false);
         } catch (error:any) {
           throw new Error(`Failed to fetch: ${error.message}`);
@@ -52,7 +55,7 @@ export default function RecipeDetails() {
           const data = await response.json();
           setDetails(data.drinks[0]);
           setLoading(false);
-          console.log(data.drinks[0]);
+          setIsLoading(false);
         } catch (error:any) {
           throw new Error(`Failed to fetch: ${error.message}`);
         }
@@ -70,6 +73,14 @@ export default function RecipeDetails() {
   const measurements = Object.keys(details)
     .filter((key) => key.includes('Measure'))
     .map((key) => details[key]);
+
+  if (isLoading) {
+    return (
+      <div className={ styles.loading }>
+        <img src={ loading } alt="loading" />
+      </div>
+    );
+  }
 
   if (loading) return <p>Loading...</p>;
 
