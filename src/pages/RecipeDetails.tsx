@@ -7,20 +7,10 @@ import Recommendations from '../components/Recommendations';
 import loadingIcon from '../images/spinner.svg';
 import shareIcon from '../images/shareIcon.svg';
 // import favIcon from '../images/favIcon.svg';
-import { FavoriteRecipeType, LocalDataType } from '../types';
+import { LocalDataType } from '../types';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
-
-const getLocalData = (key: string) => {
-  const data = localStorage.getItem(key);
-  if (key === 'inProgressRecipes') {
-    return data ? JSON.parse(data) : {
-      meals: [],
-      drinks: [],
-    };
-  }
-  return data ? JSON.parse(data) : [];
-};
+import getLocalData from '../helpers/getLocalData';
 
 export default function RecipeDetails() {
   const { id } = useParams();
@@ -30,11 +20,11 @@ export default function RecipeDetails() {
   const [details, setDetails] = useState<any>({});
   const [isLoading, setIsLoading] = useState(true);
   const [alertVisible, setAlertVisible] = useState(false);
-  const [localData, setLocalData] = useState<LocalDataType>({
+  const localData: LocalDataType = {
     doneRecipes: getLocalData('doneRecipes'),
     inProgressRecipes: getLocalData('inProgressRecipes'),
     favoriteRecipes: getLocalData('favoriteRecipes'),
-  });
+  };
   const [isFavorite, setIsFavorite] = useState(
     localData.favoriteRecipes.some((recipe) => recipe.id === id),
   );
