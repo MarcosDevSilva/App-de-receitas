@@ -6,51 +6,50 @@ import styles from '../styles/RecipeDetails.module.css';
 import Recommendations from '../components/Recommendations';
 import loadingIcon from '../images/spinner.svg';
 import shareIcon from '../images/shareIcon.svg';
-import favIcon from '../images/favIcon.svg';
+// import favIcon from '../images/favIcon.svg';
 import { FavoriteRecipeType, LocalDataType } from '../types';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+
+const getLocalData = (key: string) => {
+  const data = localStorage.getItem(key);
+  if (key === 'inProgressRecipes') {
+    return data ? JSON.parse(data) : {
+      meals: [],
+      drinks: [],
+    };
+  }
+  return data ? JSON.parse(data) : [];
+};
 
 export default function RecipeDetails() {
-  const [details, setDetails] = useState<any>({});
-  const [isLoading, setIsLoading] = useState(true);
-  const [alertVisible, setAlertVisible] = useState(false);
-  const [localData, setLocalData] = useState<LocalDataType>({
-    doneRecipes: [],
-    inProgressRecipes: {
-      meals: {},
-      drinks: {},
-    },
-    favoriteRecipes: [],
-  });
-
   const { id } = useParams();
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
+  const [details, setDetails] = useState<any>({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [localData, setLocalData] = useState<LocalDataType>({
+    doneRecipes: getLocalData('doneRecipes'),
+    inProgressRecipes: getLocalData('inProgressRecipes'),
+    favoriteRecipes: getLocalData('favoriteRecipes'),
+  });
+  const [isFavorite, setIsFavorite] = useState(
+    localData.favoriteRecipes.some((recipe) => recipe.id === id),
+  );
+
   const isMeal: boolean = pathname.includes('/meals');
 
-  useEffect(() => {
-    const getDoneRecipes = localStorage.getItem('doneRecipes');
-    const getInProgressRecipes = localStorage.getItem('inProgressRecipes');
-    const getFavoriteRecipes = localStorage.getItem('favoriteRecipes');
-    setLocalData({
-      doneRecipes: getDoneRecipes ? JSON.parse(getDoneRecipes) : null,
-      inProgressRecipes: getInProgressRecipes ? JSON.parse(getInProgressRecipes) : null,
-      favoriteRecipes: getFavoriteRecipes ? JSON.parse(getFavoriteRecipes) : null,
-    });
-  }, []);
-
-  const isDone: boolean = localData.doneRecipes
-    && localData.doneRecipes.some((recipe) => recipe.id === id);
+  const isDone: boolean = localData.doneRecipes.some((recipe) => recipe.id === id);
 
   const isInProgress = () => {
-    if (localData.inProgressRecipes) {
-      if (isMeal) {
-        return Object.keys(localData.inProgressRecipes.meals)
-          .some((key) => key === id);
-      }
-      return Object.keys(localData.inProgressRecipes.drinks)
+    if (isMeal) {
+      return Object.keys(localData.inProgressRecipes.meals)
         .some((key) => key === id);
     }
+    return Object.keys(localData.inProgressRecipes.drinks)
+      .some((key) => key === id);
   };
 
   useEffect(() => {
@@ -102,25 +101,26 @@ export default function RecipeDetails() {
   };
 
   const setToFavorites = () => {
-    const newFavRecipe: FavoriteRecipeType = {
-      id: isMeal ? details.idMeal : details.idDrink,
-      type: isMeal ? 'meal' : 'drink',
-      nationality: isMeal ? details.strArea : null,
-      category: details.strCategory,
-      alcoholicOrNot: isMeal ? '' : details.srtAlcoholic,
-      name: isMeal ? details.strMeal : details.strDrink,
-      image: isMeal ? details.strMealThumb : details.strDrinkThumb,
-    };
-    console.log(newFavRecipe);
-
-    if (localData.favoriteRecipes) {
+    if (isFavorite) {
+      const newFavList = localData.favoriteRecipes.filter((recipe) => recipe.id !== id);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(newFavList));
+      setIsFavorite(false);
+    } else {
       localStorage.setItem(
         'favoriteRecipes',
-        JSON.stringify([...localData.favoriteRecipes, newFavRecipe]),
+        JSON.stringify([...localData.favoriteRecipes, {
+          id: isMeal ? details.idMeal : details.idDrink,
+          type: isMeal ? 'meal' : 'drink',
+          nationality: isMeal ? details.strArea : '',
+          category: details.strCategory,
+          alcoholicOrNot: isMeal ? '' : details.strAlcoholic,
+          name: isMeal ? details.strMeal : details.strDrink,
+          image: isMeal ? details.strMealThumb : details.strDrinkThumb,
+        }]),
       );
+      setIsFavorite(true);
     }
   };
-  console.log(localData);
 
   if (isLoading) {
     return (
@@ -156,7 +156,12 @@ export default function RecipeDetails() {
             />
           </button>
           <button className={ styles.shareBtn } onClick={ setToFavorites }>
-            <img src={ favIcon } alt="heart" data-testid="favorite-btn" />
+            {/* <img src={ favIcon } alt="heart" data-testid="favorite-btn" /> */}
+            {isFavorite ? (
+              <img src={ blackHeartIcon } alt="heart" data-testid="favorite-btn" />
+            ) : (
+              <img src={ whiteHeartIcon } alt="heart" data-testid="favorite-btn" />
+            )}
           </button>
         </div>
         <h1
