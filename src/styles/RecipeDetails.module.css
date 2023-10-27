@@ -24,7 +24,7 @@
   z-index: 1;
 }
 
-.categoryContainer img {
+.icon {
   border: 2px solid var(--yellow);
   border-radius: 50%;
   flex-shrink: 0;
@@ -41,6 +41,11 @@
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+  margin-right: 160px;
+}
+
+.shareIcon {
+  margin-right: 11px;
 }
 
 .title {

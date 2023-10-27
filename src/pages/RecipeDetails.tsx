@@ -4,6 +4,8 @@ import ReactPlayer from 'react-player/youtube';
 import Icon from '../components/Icon';
 import styles from '../styles/RecipeDetails.module.css';
 import Recommendations from '../components/Recommendations';
+import shareIcon from '../images/shareIcon.svg';
+import favIcon from '../images/favIcon.svg';
 
 export default function RecipeDetails() {
   const { id } = useParams();
@@ -59,22 +61,18 @@ export default function RecipeDetails() {
           className={ styles.photo }
         />
         <div className={ styles.categoryContainer }>
-          <Icon category={ details.strCategory } />
-          {/* <img src={ icon } alt="" /> */}
+          <Icon category={ isMeal ? details.strCategory : details.strAlcoholic } />
           <h3 data-testid="recipe-category">
             {isMeal ? details.strCategory : details.strAlcoholic}
           </h3>
-          {/* <img src={ shareIcon } alt="share icon" /> */}
-          {/* <button>
-            <img src={ favIcon } alt="heart" />
-          </button> */}
+          <img src={ shareIcon } alt="share icon" className={ styles.shareIcon } />
+          <img src={ favIcon } alt="heart" />
         </div>
         <h1
           data-testid="recipe-title"
           className={ styles.title }
         >
           {isMeal ? details.strMeal : details.strDrink}
-
         </h1>
       </header>
       <main>

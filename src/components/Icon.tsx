@@ -10,6 +10,7 @@ import cocktail from '../images/cocktail-icon.svg';
 import shake from '../images/shake-icon.svg';
 import other from '../images/unknow-icon.svg';
 import cocoa from '../images/cocoa-icon.svg';
+import styles from '../styles/RecipeDetails.module.css';
 
 type IconType = {
   // category: 'dessert' | 'breakfast' | 'chicken' | 'beef' | 'meal' | 'drink' |
@@ -22,19 +23,19 @@ function Icon({ category }: IconType) {
 
   if (window.location.pathname.includes('meals')) {
     switch (category) {
-      case 'dessert':
+      case 'Dessert':
         icon = dessert;
         break;
-      case 'breakfast':
+      case 'Breakfast':
         icon = breakfast;
         break;
-      case 'chicken':
+      case 'Chicken':
         icon = chicken;
         break;
-      case 'beef':
+      case 'Beef':
         icon = beef;
         break;
-      case 'goat':
+      case 'Goat':
         icon = goat;
         break;
       default:
@@ -43,19 +44,19 @@ function Icon({ category }: IconType) {
     }
   } else {
     switch (category) {
-      case 'cocoa':
+      case 'Cocoa':
         icon = cocoa;
         break;
-      case 'ordinary drink':
+      case 'Ordinary drink':
         icon = ordinaryDrink;
         break;
-      case 'cocktail':
+      case 'Cocktail':
         icon = cocktail;
         break;
-      case 'shake':
+      case 'Shake':
         icon = shake;
         break;
-      case 'other/unknow':
+      case 'other/unknown':
         icon = other;
         break;
       default:
@@ -65,7 +66,7 @@ function Icon({ category }: IconType) {
   }
 
   return (
-    <img src={ icon } alt="icon" />
+    <img src={ icon } alt="icon" className={ styles.icon } />
   );
 }
 
