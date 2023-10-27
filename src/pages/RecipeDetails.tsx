@@ -7,7 +7,7 @@ import Recommendations from '../components/Recommendations';
 import loadingIcon from '../images/spinner.svg';
 import shareIcon from '../images/shareIcon.svg';
 import favIcon from '../images/favIcon.svg';
-import { LocalDataType } from '../types';
+import { FavoriteRecipeType, LocalDataType } from '../types';
 
 export default function RecipeDetails() {
   const [details, setDetails] = useState<any>({});
@@ -19,6 +19,7 @@ export default function RecipeDetails() {
       meals: {},
       drinks: {},
     },
+    favoriteRecipes: [],
   });
 
   const { id } = useParams();
@@ -30,10 +31,11 @@ export default function RecipeDetails() {
   useEffect(() => {
     const getDoneRecipes = localStorage.getItem('doneRecipes');
     const getInProgressRecipes = localStorage.getItem('inProgressRecipes');
-
+    const getFavoriteRecipes = localStorage.getItem('favoriteRecipes');
     setLocalData({
       doneRecipes: getDoneRecipes ? JSON.parse(getDoneRecipes) : null,
       inProgressRecipes: getInProgressRecipes ? JSON.parse(getInProgressRecipes) : null,
+      favoriteRecipes: getFavoriteRecipes ? JSON.parse(getFavoriteRecipes) : null,
     });
   }, []);
 
@@ -99,6 +101,27 @@ export default function RecipeDetails() {
     setTimeout(() => setAlertVisible(false), 2000);
   };
 
+  const setToFavorites = () => {
+    const newFavRecipe: FavoriteRecipeType = {
+      id: isMeal ? details.idMeal : details.idDrink,
+      type: isMeal ? 'meal' : 'drink',
+      nationality: isMeal ? details.strArea : null,
+      category: details.strCategory,
+      alcoholicOrNot: isMeal ? '' : details.srtAlcoholic,
+      name: isMeal ? details.strMeal : details.strDrink,
+      image: isMeal ? details.strMealThumb : details.strDrinkThumb,
+    };
+    console.log(newFavRecipe);
+
+    if (localData.favoriteRecipes) {
+      localStorage.setItem(
+        'favoriteRecipes',
+        JSON.stringify([...localData.favoriteRecipes, newFavRecipe]),
+      );
+    }
+  };
+  console.log(localData);
+
   if (isLoading) {
     return (
       <div className={ styles.loading }>
@@ -132,7 +155,7 @@ export default function RecipeDetails() {
               className={ styles.shareIcon }
             />
           </button>
-          <button className={ styles.shareBtn }>
+          <button className={ styles.shareBtn } onClick={ setToFavorites }>
             <img src={ favIcon } alt="heart" data-testid="favorite-btn" />
           </button>
         </div>

@@ -145,7 +145,7 @@ export type DoneRecipeType = {
   type: string,
   nationality: string,
   category: string,
-  alcoholicOrNot: boolean,
+  alcoholicOrNot: string,
   name: string,
   image: string,
   doneDate: string,
@@ -157,7 +157,18 @@ export type InProgressRecipeType = {
   meals: object,
 };
 
+export type FavoriteRecipeType = {
+  id: string,
+  type: string,
+  nationality: string,
+  category: string,
+  alcoholicOrNot: string,
+  name: string,
+  image: string,
+};
+
 export type LocalDataType = {
   doneRecipes: DoneRecipeType[],
   inProgressRecipes: InProgressRecipeType,
+  favoriteRecipes: FavoriteRecipeType[],
 };
