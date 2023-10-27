@@ -3,7 +3,7 @@ import { vi } from 'vitest';
 import { mockFetchDrinkDetail } from './helpers/mocks/api/mockFetchApiDrinks';
 import App from '../App';
 import { renderWithRouterAndRedux } from './helpers/renderWith';
-import { mockFetchMealDetail, mockFetchMealsIngredients } from './helpers/mocks/api/mockFetchMeals';
+import { mockFetchMealDetail } from './helpers/mocks/api/mockFetchMeals';
 
 describe('<RecipeDetails />', () => {
   afterEach(() => {
@@ -15,7 +15,7 @@ describe('<RecipeDetails />', () => {
   const titleId = 'recipe-title';
   const ingredientId = /-ingredient-name-and-measure/i;
   const instructionsId = 'instructions';
-  const recommendationsId = /-recommendation-card/i;
+  // const recommendationsId = /-recommendation-card/i;
   const recipeButtonId = 'start-recipe-btn';
   const drinkRote = '/drinks/15997';
   const mealRote = '/meals/52771';
