@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import ReactPlayer from 'react-player/youtube';
 import Icon from '../components/Icon';
 import styles from '../styles/RecipeDetails.module.css';
@@ -22,6 +22,7 @@ export default function RecipeDetails() {
 
   const { id } = useParams();
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   const isMeal: boolean = pathname.includes('/meals');
 
@@ -94,6 +95,10 @@ export default function RecipeDetails() {
     );
   }
 
+  const handleClick = () => {
+    return isMeal ? navigate(`/meals/${id}/in-progress`)
+      : navigate(`/drinks/${id}/in-progress`);
+  };
   return (
     <>
       <header className={ styles.headerDetails }>
@@ -161,6 +166,7 @@ export default function RecipeDetails() {
           <button
             className={ styles.startBtn }
             data-testid="start-recipe-btn"
+            onClick={ handleClick }
           >
             {isInProgress() ? 'Continue Recipe' : 'Start Recipe'}
 
