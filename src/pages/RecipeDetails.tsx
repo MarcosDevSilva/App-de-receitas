@@ -7,7 +7,7 @@ import Recommendations from '../components/Recommendations';
 import loadingIcon from '../images/spinner.svg';
 import shareIcon from '../images/shareIcon.svg';
 // import favIcon from '../images/favIcon.svg';
-import { FavoriteRecipeType, LocalDataType } from '../types';
+import { LocalDataType } from '../types';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 
