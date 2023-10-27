@@ -4,16 +4,19 @@ p {
   padding: 0;
 }
 
+a {
+  text-decoration: none;
+}
+
 
 .container {
-
-  /* border: 1px solid var(--gray_b); */
+  border: 1px solid var(--gray_b);
   border-radius: 5px;
   display: flex;
   height: 130px;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
   overflow: hidden;
-  width: 320px;
+  width: 330px;
 }
 
 .img {
@@ -39,8 +42,10 @@ p {
 }
 
 .title {
+  color: var(--black);
   font-size: 0.8rem;
   font-weight: 700;
+  text-decoration: none;
 }
 
 .category {
@@ -93,4 +98,19 @@ p {
   margin-right: 0.2rem;
   padding: 5px 8px;
   text-align: left;
+}
+
+.copied {
+  background-color: var(--purple);
+  border: none;
+  border-radius: 100%;
+  color: var(--white);
+  font-size: 0.5rem;
+  line-height: 0.7rem;
+  margin-left: -12px;
+  margin-top: -6px;
+  overflow: visible;
+  padding: 5px;
+  text-align: center;
+  transition: ease-in-out;
 }

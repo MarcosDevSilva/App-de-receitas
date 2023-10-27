@@ -183,4 +183,5 @@ export type DoneRecipesCardType = {
   nationality: string,
   index: number,
   type: string,
+  alcoholicOrNot: string
 };
