@@ -1,11 +1,13 @@
-import styles from '../styles/Meals.module.css';
+import styles from '../styles/Recipes.module.css';
 import Card from './Card';
 import spinner from '../images/spinner.svg';
 import { RecipesType } from '../types';
+import RecipesFilter from './RecipesFilter';
 
 function Recipes({ drink, meal, loading, recipeType } : RecipesType) {
   return (
     <div className={ styles.container }>
+      <RecipesFilter />
       <div className={ styles.list }>
         {loading && (
           <div className={ styles.loading }>
