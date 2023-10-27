@@ -12,6 +12,7 @@ import { LocalDataType } from '../types';
 export default function RecipeDetails() {
   const [details, setDetails] = useState<any>({});
   const [isLoading, setIsLoading] = useState(true);
+  const [alertVisible, setAlertVisible] = useState(false);
   const [localData, setLocalData] = useState<LocalDataType>({
     doneRecipes: [],
     inProgressRecipes: {
@@ -92,6 +93,12 @@ export default function RecipeDetails() {
       : navigate(`/drinks/${id}/in-progress`);
   };
 
+  const handleCopy = () => {
+    navigator.clipboard.writeText(`http://localhost:3000${pathname}`);
+    setAlertVisible(true);
+    setTimeout(() => setAlertVisible(false), 2000);
+  };
+
   if (isLoading) {
     return (
       <div className={ styles.loading }>
@@ -114,13 +121,20 @@ export default function RecipeDetails() {
           <h3 data-testid="recipe-category">
             {isMeal ? details.strCategory : details.strAlcoholic}
           </h3>
-          <img
-            src={ shareIcon }
-            alt="share icon"
-            className={ styles.shareIcon }
+          <button
             data-testid="share-btn"
-          />
-          <img src={ favIcon } alt="heart" data-testid="favorite-btn" />
+            onClick={ handleCopy }
+            className={ styles.shareBtn }
+          >
+            <img
+              src={ shareIcon }
+              alt="share icon"
+              className={ styles.shareIcon }
+            />
+          </button>
+          <button className={ styles.shareBtn }>
+            <img src={ favIcon } alt="heart" data-testid="favorite-btn" />
+          </button>
         </div>
         <h1
           data-testid="recipe-title"
@@ -130,6 +144,7 @@ export default function RecipeDetails() {
         </h1>
       </header>
       <main>
+        {alertVisible && <span className={ styles.copyAlert }>Link copied!</span>}
         <section>
           <h2>Ingredients</h2>
           <ul>

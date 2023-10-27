@@ -44,6 +44,12 @@
   margin-right: 160px;
 }
 
+.shareBtn {
+  background: none;
+  height: fit-content;
+  width: fit-content;
+}
+
 .shareIcon {
   margin-right: 11px;
 }
@@ -61,6 +67,12 @@
   text-transform: uppercase;
 }
 
+.copyAlert {
+  border: 0.554px solid var(--gray_b);
+  padding: 3px;
+  text-align: center;
+  width: 100%;
+}
 
 h2 {
   font-size: 1.25rem;
