@@ -108,3 +108,8 @@ p {
 .video h2 {
   margin-bottom: 1rem;
 }
+
+.startBtn {
+  bottom: 0%;
+  position: fixed;
+}
