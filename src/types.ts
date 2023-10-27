@@ -159,5 +159,5 @@ export type InProgressRecipeType = {
 
 export type LocalDataType = {
   doneRecipes: DoneRecipeType[],
-  inProgressRecipes: InProgressRecipeType[],
+  inProgressRecipes: InProgressRecipeType,
 };

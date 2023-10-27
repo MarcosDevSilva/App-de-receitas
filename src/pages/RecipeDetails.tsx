@@ -14,11 +14,16 @@ export default function RecipeDetails() {
   const [isLoading, setIsLoading] = useState(true);
   const [localData, setLocalData] = useState<LocalDataType>({
     doneRecipes: [],
-    inProgressRecipes: [],
+    inProgressRecipes: {
+      meals: {},
+      drinks: {},
+    },
   });
 
   const { id } = useParams();
   const { pathname } = useLocation();
+
+  const isMeal: boolean = pathname.includes('/meals');
 
   useEffect(() => {
     const getDoneRecipes = localStorage.getItem('doneRecipes');
@@ -31,8 +36,18 @@ export default function RecipeDetails() {
   }, []);
 
   const isDone: boolean = localData.doneRecipes
-  && localData.doneRecipes.some((recipe) => recipe.id === id);
-  const isMeal: boolean = pathname.includes('/meals');
+    && localData.doneRecipes.some((recipe) => recipe.id === id);
+
+  const isInProgress = () => {
+    if (localData.inProgressRecipes) {
+      if (isMeal) {
+        return Object.keys(localData.inProgressRecipes.meals)
+          .some((key) => key === id);
+      }
+      return Object.keys(localData.inProgressRecipes.drinks)
+        .some((key) => key === id);
+    }
+  };
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -147,7 +162,7 @@ export default function RecipeDetails() {
             className={ styles.startBtn }
             data-testid="start-recipe-btn"
           >
-            Start Recipe
+            {isInProgress() ? 'Continue Recipe' : 'Start Recipe'}
 
           </button>
         )}
