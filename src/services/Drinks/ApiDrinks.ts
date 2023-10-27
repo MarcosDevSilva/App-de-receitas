@@ -29,4 +29,3 @@ export const
   )
     .then((response) => response.json())
     .then((data) => data);
-
