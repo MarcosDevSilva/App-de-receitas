@@ -1,0 +1,6 @@
+.icon {
+  flex-shrink: 0;
+  height: 33px;
+  position: absolute;
+  width: 33px;
+}

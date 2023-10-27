@@ -41,7 +41,6 @@
   }
 
   .tomato {
-    flex-shrink: 0;
     height: 279px;
     margin-top: 150px;
     position: absolute;
@@ -70,4 +69,5 @@
     height: 640px;
     overflow: hidden;
   }
+
 }
