@@ -6,12 +6,12 @@ import Recipes from '../components/Recipes';
 import { fetchMealsName } from '../redux/actions';
 
 function Meals() {
-  const { meals, loading } = useSelector((state: GlobalState) => state.revenues);
-  const { drinks } = useSelector((state: GlobalState) => state.revenues);
+  const { drinks, meals,
+    loading, caller } = useSelector((state: GlobalState) => state.revenues);
   const navigate = useNavigate();
   const dispatch: Dispatch = useDispatch();
 
-  if (meals.length === 1) {
+  if (meals.length === 1 && caller !== 'categories') {
     console.log(`/meals/${meals[0].idMeal}`);
 
     navigate(`/meals/${meals[0].idMeal}`);
@@ -23,24 +23,6 @@ function Meals() {
 
   return (
     <Recipes meal={ meals } loading={ loading } recipeType="meals" drink={ drinks } />
-    // <div className={ styles.container }>
-    //   <div className={ styles.list }>
-    //     {loading && (
-    //       <div className={ styles.loading }>
-    //         <img src={ spinner } alt="loading" />
-    //       </div>
-    //     )}
-    //     { meals.length > 0
-    //    && meals.map(({ strMeal, strMealThumb }, index) => (
-    //      <Card
-    //        key={ `${index} ${strMeal}` }
-    //        index={ index }
-    //        name={ strMeal }
-    //        img={ strMealThumb }
-    //      />
-    //    )) }
-    //   </div>
-    // </div>
   );
 }
 
