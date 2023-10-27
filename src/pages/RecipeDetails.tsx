@@ -61,7 +61,7 @@ export default function RecipeDetails() {
           setDetails(data.meals[0]);
           setIsLoading(false);
         } catch (error:any) {
-          throw new Error(`Failed to fetch: ${error.message}`);
+          console.log(`Failed to fetch: ${error.message}`);
         }
       }
 
@@ -72,7 +72,7 @@ export default function RecipeDetails() {
           setDetails(data.drinks[0]);
           setIsLoading(false);
         } catch (error:any) {
-          throw new Error(`Failed to fetch: ${error.message}`);
+          console.log(`Failed to fetch: ${error.message}`);
         }
       }
     };

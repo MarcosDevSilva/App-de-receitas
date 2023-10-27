@@ -245,7 +245,7 @@ describe('<Meals />', () => {
     await user.click(ingredientsRadio);
     await user.click(buttonSearch);
 
-    expect(alert).toBeCalledTimes(1);
+    expect(alert).toBeCalledTimes(2);
     expect(alert).toHaveBeenCalledWith(resquestEmpty);
   });
 
@@ -274,7 +274,7 @@ describe('<Meals />', () => {
     await user.click(nameRadio);
     await user.click(buttonSearch);
 
-    expect(alert).toBeCalledTimes(1);
+    expect(alert).toBeCalledTimes(2);
     expect(alert).toHaveBeenCalledWith(resquestEmpty);
   });
 
@@ -303,7 +303,7 @@ describe('<Meals />', () => {
     await user.click(letterRadio);
     await user.click(buttonSearch);
 
-    expect(alert).toBeCalledTimes(1);
+    expect(alert).toBeCalledTimes(2);
     expect(alert).toHaveBeenCalledWith(resquestEmpty);
   });
 

@@ -56,7 +56,7 @@ function Icon({ category }: IconType) {
       case 'Shake':
         icon = shake;
         break;
-      case 'other/unknown':
+      case 'Other/Unknown':
         icon = other;
         break;
       default:
@@ -66,7 +66,7 @@ function Icon({ category }: IconType) {
   }
 
   return (
-    <img src={ icon } alt="icon" className={ styles.icon } />
+    <img src={ icon } alt={ category } className={ styles.icon } />
   );
 }
 

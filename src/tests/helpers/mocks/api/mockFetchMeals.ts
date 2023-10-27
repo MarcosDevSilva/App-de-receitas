@@ -2,7 +2,8 @@ import { dataMealsLetterC } from '../data/Meals/dataMealsLetterC';
 import { dataMealsNameChicken } from '../data/Meals/dataMealsNameChicken';
 import { dataMealsReturn1Element } from '../data/Meals/dataMealsReturn1Element';
 import { dataMealsReturnEmpty } from '../data/Meals/dataMealsReturnEmpty';
-import { dataMealsIngredientsChicken } from '../data/Meals/mockMealsIngredientsChicken';
+import { dataOneMealDetails } from '../data/Meals/dataOneMealDetails';
+import { dataMealsIngredientsChicken } from '../data/Meals/dataMealsIngredientsChicken';
 
 export const mockFetchMealsIngredients = () => Promise.resolve({
   status: 200,
@@ -32,4 +33,10 @@ export const mockFetchMealsReturn1Element = () => Promise.resolve({
   status: 200,
   ok: true,
   json: () => Promise.resolve(dataMealsReturn1Element),
+});
+
+export const mockFetchMealDetail = () => Promise.resolve({
+  status: 200,
+  ok: true,
+  json: () => Promise.resolve(dataOneMealDetails),
 });

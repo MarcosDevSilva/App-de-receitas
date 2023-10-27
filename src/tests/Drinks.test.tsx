@@ -245,7 +245,7 @@ describe('<Drinks />', () => {
     await user.click(ingredientsRadio);
     await user.click(buttonSearch);
 
-    expect(alert).toBeCalledTimes(1);
+    expect(alert).toBeCalledTimes(2);
     expect(alert).toHaveBeenCalledWith(resquestEmpty);
   });
 
@@ -274,7 +274,7 @@ describe('<Drinks />', () => {
     await user.click(nameRadio);
     await user.click(buttonSearch);
 
-    expect(alert).toBeCalledTimes(1);
+    expect(alert).toBeCalledTimes(2);
     expect(alert).toHaveBeenCalledWith(resquestEmpty);
   });
 
@@ -303,12 +303,12 @@ describe('<Drinks />', () => {
     await user.click(letterRadio);
     await user.click(buttonSearch);
 
-    expect(alert).toBeCalledTimes(1);
+    expect(alert).toBeCalledTimes(2);
     expect(alert).toHaveBeenCalledWith(resquestEmpty);
   });
 
   test('Pesquisar por qualquer filtro e a api retorna 1 elemento o usuário é direcionado para a página de detalhes.', async () => {
-    vi.spyOn(global, 'fetch').mockImplementation(mockFetchDrinksReturn1Element as any);
+    vi.spyOn(global, 'fetch').mockImplementationOnce(mockFetchDrinksReturn1Element as any);
 
     const state = {
       revenues: {
