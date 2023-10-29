@@ -59,41 +59,4 @@ export const dataOneMealDetails = {
       dateModified: null,
     },
   ],
-  drinks: [
-    {
-      strDrink: 'Adam Sunrise',
-      strDrinkThumb: 'https://www.thecocktaildb.com/images/media/drink/vtuyvu1472812112.jpg',
-      idDrink: '15567',
-    },
-    {
-      strDrink: 'Aloha Fruit punch',
-      strDrinkThumb: 'https://www.thecocktaildb.com/images/media/drink/wsyvrt1468876267.jpg',
-      idDrink: '12862',
-    },
-    {
-      strDrink: 'Amaretto Liqueur',
-      strDrinkThumb: 'https://www.thecocktaildb.com/images/media/drink/swqxuv1472719649.jpg',
-      idDrink: '12792',
-    },
-    {
-      strDrink: 'Bourbon Sling',
-      strDrinkThumb: 'https://www.thecocktaildb.com/images/media/drink/3s36ql1504366260.jpg',
-      idDrink: '11146',
-    },
-    {
-      strDrink: 'Chocolate Drink',
-      strDrinkThumb: 'https://www.thecocktaildb.com/images/media/drink/q7w4xu1487603180.jpg',
-      idDrink: '12734',
-    },
-    {
-      strDrink: 'Classic Old-Fashioned',
-      strDrinkThumb: 'https://www.thecocktaildb.com/images/media/drink/w8cxqv1582485254.jpg',
-      idDrink: '11145',
-    },
-    {
-      strDrink: 'Coffee-Vodka',
-      strDrinkThumb: 'https://www.thecocktaildb.com/images/media/drink/qvrrvu1472667494.jpg',
-      idDrink: '12800',
-    },
-  ],
 };

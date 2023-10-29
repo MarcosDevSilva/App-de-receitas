@@ -15,7 +15,7 @@ type Options = {
 };
 
 function withRouter(component: React.ReactElement, initialEntries: string[]) {
-  window.history.pushState({}, '', initialEntries[0]);
+  window.history.pushState({}, '', initialEntries[initialEntries.length - 1]);
   return (
     <MemoryRouter initialEntries={ initialEntries }>
       { component }

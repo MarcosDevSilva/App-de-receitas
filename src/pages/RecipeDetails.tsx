@@ -11,6 +11,8 @@ import { LocalDataType } from '../types';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import getLocalData from '../helpers/getLocalData';
+import { getMeal } from '../services/Meals/ApiMeals';
+import { getDrink } from '../services/Drinks/ApiDrinks';
 
 export default function RecipeDetails() {
   const { id } = useParams();
@@ -46,9 +48,9 @@ export default function RecipeDetails() {
     const fetchDetails = async () => {
       if (isMeal) {
         try {
-          const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
-          const data = await response.json();
-          setDetails(data.meals[0]);
+          const response = await getMeal(id as string);// fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
+          // const data = await response.json();
+          setDetails(response.meals[0]);
           setIsLoading(false);
         } catch (error:any) {
           console.log(`Failed to fetch: ${error.message}`);
@@ -57,9 +59,9 @@ export default function RecipeDetails() {
 
       if (!isMeal) {
         try {
-          const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
-          const data = await response.json();
-          setDetails(data.drinks[0]);
+          const response = await getDrink(id as string); // fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
+          // const data = await response.json();
+          setDetails(response.drinks[0]);
           setIsLoading(false);
         } catch (error:any) {
           console.log(`Failed to fetch: ${error.message}`);

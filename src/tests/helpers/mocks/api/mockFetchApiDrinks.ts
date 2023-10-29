@@ -3,7 +3,7 @@ import { dataDrinksLetterW } from '../data/Drinks/dataDrinksLetterW';
 import { dataDrinksNameWater } from '../data/Drinks/dataDrinksNameWater';
 import { dataDrinksReturn1Element } from '../data/Drinks/dataDrinksReturn1Element';
 import { dataDrinksReturnEmpty } from '../data/Drinks/dataDrinksReturnEmpty';
-import { dataDrinkDetail } from '../data/Drinks/dataOneDrinkDetail';
+import { dataOneDrinkDetails } from '../data/Drinks/dataOneDrinkDetails';
 
 export const mockFetchDrinksIngredients = () => Promise.resolve({
   status: 200,
@@ -38,7 +38,7 @@ export const mockFetchDrinksReturn1Element = () => Promise.resolve({
 export const mockFetchDrinkDetail = () => Promise.resolve({
   status: 200,
   ok: true,
-  json: () => Promise.resolve(dataDrinkDetail),
+  json: () => Promise.resolve(dataOneDrinkDetails),
 });
 
 /* export const mockFetchDrinkDetail = (url: string) => Promise.resolve({

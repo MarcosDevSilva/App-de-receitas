@@ -1,4 +1,4 @@
-export const dataDrinkDetail = {
+export const dataOneDrinkDetails = {
   drinks: [
     {
       idDrink: '15997',
@@ -58,43 +58,6 @@ export const dataDrinkDetail = {
       strMeasure15: null,
       strCreativeCommonsConfirmed: 'No',
       dateModified: '2016-07-18 22:06:00',
-    },
-  ],
-  meals: [
-    {
-      strMeal: 'Brown Stew Chicken',
-      strMealThumb: 'https://www.themealdb.com/images/media/meals/sypxpx1515365095.jpg',
-      idMeal: '52940',
-    },
-    {
-      strMeal: 'Chicken & mushroom Hotpot',
-      strMealThumb: 'https://www.themealdb.com/images/media/meals/uuuspp1511297945.jpg',
-      idMeal: '52846',
-    },
-    {
-      strMeal: 'Chicken Alfredo Primavera',
-      strMealThumb: 'https://www.themealdb.com/images/media/meals/syqypv1486981727.jpg',
-      idMeal: '52796',
-    },
-    {
-      strMeal: 'Chicken Basquaise',
-      strMealThumb: 'https://www.themealdb.com/images/media/meals/wruvqv1511880994.jpg',
-      idMeal: '52934',
-    },
-    {
-      strMeal: 'Chicken Congee',
-      strMealThumb: 'https://www.themealdb.com/images/media/meals/1529446352.jpg',
-      idMeal: '52956',
-    },
-    {
-      strMeal: 'Chicken Handi',
-      strMealThumb: 'https://www.themealdb.com/images/media/meals/wyxwsp1486979827.jpg',
-      idMeal: '52795',
-    },
-    {
-      strMeal: 'Kentucky Fried Chicken',
-      strMealThumb: 'https://www.themealdb.com/images/media/meals/xqusqy1487348868.jpg',
-      idMeal: '52813',
     },
   ],
 };
