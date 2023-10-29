@@ -1,3 +1,6 @@
+import { dataMealsAll } from '../data/Meals/dataMealsAll';
+import { dataMealsCategories } from '../data/Meals/dataMealsCategories';
+import { dataMealsCategoryGoat } from '../data/Meals/dataMealsCategoryGoat';
 import { dataMealsLetterC } from '../data/Meals/dataMealsLetterC';
 import { dataMealsNameChicken } from '../data/Meals/dataMealsNameChicken';
 import { dataMealsReturn1Element } from '../data/Meals/dataMealsReturn1Element';
