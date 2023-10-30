@@ -1,4 +1,4 @@
-export default function getLocalData (key: string) {
+export default function getLocalData(key: string) {
   const data = localStorage.getItem(key);
   if (key === 'inProgressRecipes') {
     return data ? JSON.parse(data) : {
@@ -7,3 +7,4 @@ export default function getLocalData (key: string) {
     };
   }
   return data ? JSON.parse(data) : [];
+}

@@ -29,3 +29,7 @@ export const
   )
     .then((response) => response.json())
     .then((data) => data);
+
+export const getDrink = (id: string) => fetch(`${api}lookup.php?i=${id}`)
+  .then((response) => response.json())
+  .then((data) => data);
