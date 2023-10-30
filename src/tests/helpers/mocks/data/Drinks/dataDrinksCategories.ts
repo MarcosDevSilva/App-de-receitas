@@ -34,5 +34,4 @@ export const dataDrinksCategories = {
       strCategory: 'Soft Drink',
     },
   ],
-
 };

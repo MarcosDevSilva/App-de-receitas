@@ -21,6 +21,7 @@ export const searchMealsRecommendations = () => fetch(`${api}search.php?s=`)
 export const
   searchMealsCategories = () => fetch(`${api}list.php?c=list`)
     .then((response) => response.json())
+    .catch((error:any) => console.log(`Failed to fetch: ${error.message}`))
     .then((data) => data);
 
 export const
@@ -29,3 +30,7 @@ export const
   )
     .then((response) => response.json())
     .then((data) => data);
+
+export const getMeal = (id: string) => fetch(`${api}lookup.php?i=${id}`)
+  .then((response) => response.json())
+  .then((data) => data);

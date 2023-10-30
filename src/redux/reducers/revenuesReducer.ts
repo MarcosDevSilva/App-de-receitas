@@ -13,7 +13,7 @@ const initialState = {
 const revenuesReducer = (state = initialState, action: AnyAction) => {
   switch (action.type) {
     case REQUEST_SUCCESSFUL_DRINKS:
-      if (action.payload === null) {
+      if (action.payload === null || !action.payload) {
         alertMessageEmpty();
         return {
           ...state,

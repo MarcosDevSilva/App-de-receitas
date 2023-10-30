@@ -15,58 +15,42 @@ import styles from '../styles/RecipeDetails.module.css';
 type IconType = {
   // category: 'dessert' | 'breakfast' | 'chicken' | 'beef' | 'meal' | 'drink' |
   // 'ordinary drink' | 'cocktail' | 'shake' | 'other/unknow' | 'cocoa' | 'goat';
-  category: string;
+  category?: string;
 };
 
-function Icon({ category }: IconType) {
+function Icon({ category = '' }: IconType) {
   let icon = '';
 
   if (window.location.pathname.includes('meals')) {
-    switch (category) {
-      case 'Dessert':
-        icon = dessert;
-        break;
-      case 'Breakfast':
-        icon = breakfast;
-        break;
-      case 'Chicken':
-        icon = chicken;
-        break;
-      case 'Beef':
-        icon = beef;
-        break;
-      case 'Goat':
-        icon = goat;
-        break;
-      default:
-        icon = meal;
-        break;
+    if (category.includes('Dessert')) {
+      icon = dessert;
+    } else if (category.includes('Breakfast')) {
+      icon = breakfast;
+    } else if (category.includes('Chicken')) {
+      icon = chicken;
+    } else if (category.includes('Beef')) {
+      icon = beef;
+    } else if (category.includes('Goat')) {
+      icon = goat;
+    } else {
+      icon = meal;
     }
+  } else if (category.includes('Cocoa')) {
+    icon = cocoa;
+  } else if (category.includes('Ordinary Drink')) {
+    icon = ordinaryDrink;
+  } else if (category.includes('Cocktail')) {
+    icon = cocktail;
+  } else if (category.includes('Shake')) {
+    icon = shake;
+  } else if (category.includes('Other / Unknown')) {
+    icon = other;
   } else {
-    switch (category) {
-      case 'Cocoa':
-        icon = cocoa;
-        break;
-      case 'Ordinary drink':
-        icon = ordinaryDrink;
-        break;
-      case 'Cocktail':
-        icon = cocktail;
-        break;
-      case 'Shake':
-        icon = shake;
-        break;
-      case 'other/unknown':
-        icon = other;
-        break;
-      default:
-        icon = drink;
-        break;
-    }
+    icon = drink;
   }
 
   return (
-    <img src={ icon } alt="icon" className={ styles.icon } />
+    <img src={ icon } alt={ category } className={ styles.icon } />
   );
 }
 

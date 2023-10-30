@@ -1,11 +1,9 @@
-import { dataDrinksAll } from '../data/Drinks/dataDrinksAll';
-import { dataDrinksCategories } from '../data/Drinks/dataDrinksCategories';
-import { dataDrinksCategoryCocktail } from '../data/Drinks/dataDrinksCategoryCocktail';
 import { dataDrinksIngredientsWater } from '../data/Drinks/dataDrinksIngredientsWater';
 import { dataDrinksLetterW } from '../data/Drinks/dataDrinksLetterW';
 import { dataDrinksNameWater } from '../data/Drinks/dataDrinksNameWater';
 import { dataDrinksReturn1Element } from '../data/Drinks/dataDrinksReturn1Element';
 import { dataDrinksReturnEmpty } from '../data/Drinks/dataDrinksReturnEmpty';
+import { dataOneDrinkDetails } from '../data/Drinks/dataOneDrinkDetails';
 
 export const mockFetchDrinksIngredients = () => Promise.resolve({
   status: 200,
@@ -37,20 +35,20 @@ export const mockFetchDrinksReturn1Element = () => Promise.resolve({
   json: () => Promise.resolve(dataDrinksReturn1Element),
 });
 
-export const mockFetchDrinksReturnAll = () => Promise.resolve({
+export const mockFetchDrinkDetail = () => Promise.resolve({
   status: 200,
   ok: true,
-  json: () => Promise.resolve(dataDrinksAll),
+  json: () => Promise.resolve(dataOneDrinkDetails),
 });
 
-export const mockFetchDrinksCategories = () => Promise.resolve({
+/* export const mockFetchDrinkDetail = (url: string) => Promise.resolve({
   status: 200,
   ok: true,
-  json: () => Promise.resolve(dataDrinksCategories),
+  json: () => {
+    if (url.includes('https://www.themealdb.com/api/json/v1/1/lookup.php?i=')) {
+      return Promise.resolve(dataDrinkDetail);
+    }
+    return Promise.resolve(dataDrinksIngredientsWater);
+  },
 });
-
-export const mockFetchDrinksPerCategories = () => Promise.resolve({
-  status: 200,
-  ok: true,
-  json: () => Promise.resolve(dataDrinksCategoryCocktail),
-});
+*/
