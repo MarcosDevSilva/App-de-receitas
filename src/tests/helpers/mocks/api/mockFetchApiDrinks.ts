@@ -1,3 +1,6 @@
+import { dataDrinksAll } from '../data/Drinks/dataDrinksAll';
+import { dataDrinksCategories } from '../data/Drinks/dataDrinksCategories';
+import { dataDrinksCategoryCocktail } from '../data/Drinks/dataDrinksCategoryCocktail';
 import { dataDrinksIngredientsWater } from '../data/Drinks/dataDrinksIngredientsWater';
 import { dataDrinksLetterW } from '../data/Drinks/dataDrinksLetterW';
 import { dataDrinksNameWater } from '../data/Drinks/dataDrinksNameWater';
@@ -41,6 +44,23 @@ export const mockFetchDrinkDetail = () => Promise.resolve({
   json: () => Promise.resolve(dataOneDrinkDetails),
 });
 
+export const mockFetchDrinksReturnAll = () => Promise.resolve({
+  status: 200,
+  ok: true,
+  json: () => Promise.resolve(dataDrinksAll),
+});
+
+export const mockFetchDrinksCategories = () => Promise.resolve({
+  status: 200,
+  ok: true,
+  json: () => Promise.resolve(dataDrinksCategories),
+});
+
+export const mockFetchDrinksPerCategories = () => Promise.resolve({
+  status: 200,
+  ok: true,
+  json: () => Promise.resolve(dataDrinksCategoryCocktail),
+});
 /* export const mockFetchDrinkDetail = (url: string) => Promise.resolve({
   status: 200,
   ok: true,
