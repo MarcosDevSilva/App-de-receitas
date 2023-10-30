@@ -40,3 +40,21 @@ export const mockFetchMealDetail = () => Promise.resolve({
   ok: true,
   json: () => Promise.resolve(dataOneMealDetails),
 });
+
+export const mockFetchMealsReturnAll = () => Promise.resolve({
+  status: 200,
+  ok: true,
+  json: () => Promise.resolve(dataMealsAll),
+});
+
+export const mockFetchMealsCategories = () => Promise.resolve({
+  status: 200,
+  ok: true,
+  json: () => Promise.resolve(dataMealsCategories),
+});
+
+export const mockFetchMealsPerCategories = () => Promise.resolve({
+  status: 200,
+  ok: true,
+  json: () => Promise.resolve(dataMealsCategoryGoat),
+});
