@@ -18,10 +18,6 @@ import { dataMealsReturnEmpty } from './helpers/mocks/data/Meals/dataMealsReturn
 import { dataDrinksReturnEmpty } from './helpers/mocks/data/Drinks/dataDrinksReturnEmpty';
 
 describe('<SearchBar />', () => {
-  /* beforeEach(() => {
-    vi.spyOn(global, 'fetch').mockImplementation(Promise.resolve);
-  });
-*/
   afterEach(() => {
     vi.clearAllMocks();
   });
