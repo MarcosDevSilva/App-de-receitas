@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import ReactPlayer from 'react-player/youtube';
 import Icon from '../components/Icon';
 import shareIcon from '../images/shareIcon.svg';
-import styles from '../styles/RecipeDetails.module.css';
+import styles from '../styles/RecipeInProgress.module.css';
 import getLocalData from '../helpers/getLocalData';
 import { LocalDataType } from '../types';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
@@ -15,7 +15,6 @@ import loadingIcon from '../images/spinner.svg';
 export default function RecipeInProgress() {
   const { id } = useParams();
   const { pathname } = useLocation();
-  // const navigate = useNavigate();
 
   // TO DO passar is loading para redux??
   const [isLoading, setIsLoading] = useState(true);
@@ -23,11 +22,12 @@ export default function RecipeInProgress() {
 
   // TO DO passar details e localData para redux
   const [details, setDetails] = useState<any>({});
-  const localData: LocalDataType = {
+  const [localData, setLocalData] = useState<LocalDataType>({
     doneRecipes: getLocalData('doneRecipes'),
     inProgressRecipes: getLocalData('inProgressRecipes'),
     favoriteRecipes: getLocalData('favoriteRecipes'),
-  };
+  });
+
   const [isFavorite, setIsFavorite] = useState(
     localData.favoriteRecipes.some((recipe) => recipe.id === id),
   );
@@ -97,6 +97,17 @@ export default function RecipeInProgress() {
     setTimeout(() => setAlertVisible(false), 2000);
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { labels } = e.target;
+    const value = 'line-through solid rgb(0, 0, 0)';
+
+    if (labels && labels[0].style.textDecoration !== value) {
+      labels[0].style.textDecoration = value;
+    } else if (labels && labels[0].style.textDecoration === value) {
+      labels[0].style.textDecoration = '';
+    }
+  };
+
   if (isLoading) {
     return (
       <div className={ styles.loading }>
@@ -149,19 +160,24 @@ export default function RecipeInProgress() {
         {alertVisible && <span className={ styles.copyAlert }>Link copied!</span>}
         <section>
           <h2>Ingredients</h2>
-          <ul>
-            {ingredients.filter((ingredient) => ingredient !== null)
-              .map((ingredient, index) => {
-                return (
-                  <li
-                    key={ `${index}-ingredient-name-and-measure` }
-                    data-testid={ `${index}-ingredient-name-and-measure` }
+          {ingredients.filter((ingredient) => ingredient !== null)
+            .map((ingredient, index) => {
+              return (
+                <div key={ `${index}-ingredient-step` }>
+                  <input
+                    type="checkbox"
+                    id={ `${index}-ingredient-step` }
+                    onChange={ handleChange }
+                  />
+                  <label
+                    htmlFor={ `${index}-ingredient-step` }
+                    data-testid={ `${index}-ingredient-step` }
                   >
                     {`${measurements[index]} ${ingredient}`}
-                  </li>
-                );
-              })}
-          </ul>
+                  </label>
+                </div>
+              );
+            })}
         </section>
         <section>
           <h2>Instructions</h2>
