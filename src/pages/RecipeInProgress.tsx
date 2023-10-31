@@ -29,11 +29,6 @@ export default function RecipeInProgress() {
     favoriteRecipes: getLocalData('favoriteRecipes'),
   });
 
-  // const [checked, setChecked] = useState<string[]>(
-  //   isMeal
-  //     ? localData.inProgressRecipes.meals[id] : localData.inProgressRecipes.drinks[id],
-  // );
-
   const checked = isMeal
     ? localData.inProgressRecipes.meals[id] : localData.inProgressRecipes.drinks[id];
 
@@ -106,13 +101,6 @@ export default function RecipeInProgress() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { labels, value, checked: isChecked } = e.target;
-    // setChecked([...checked, value]);
-
-    // if (labels && labels[0].className !== 'checked') {
-    //   labels[0].className = 'checked';
-    // } else if (labels && labels[0].className === 'checked') {
-    //   labels[0].className = '';
-    // }
 
     // fazer lógica pra colocar e tirar da lista de checked e atualizar o local Storage e o estado
     if (!checked.includes(value)) {
