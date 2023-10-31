@@ -4,6 +4,9 @@ import { dataMealsReturn1Element } from '../data/Meals/dataMealsReturn1Element';
 import { dataMealsReturnEmpty } from '../data/Meals/dataMealsReturnEmpty';
 import { dataOneMealDetails } from '../data/Meals/dataOneMealDetails';
 import { dataMealsIngredientsChicken } from '../data/Meals/dataMealsIngredientsChicken';
+import { dataMealsAll } from '../data/Meals/dataMealsAll';
+import { dataMealsCategories } from '../data/Meals/dataMealsCategories ';
+import { dataMealsCategoryGoat } from '../data/Meals/dataMealsCategoryGoat';
 
 export const mockFetchMealsIngredients = () => Promise.resolve({
   status: 200,
