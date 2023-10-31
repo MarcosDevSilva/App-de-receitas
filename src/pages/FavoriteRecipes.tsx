@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import FavoriteRecipesCard from '../components/FavoriteRecipesCard';
 import { FavoriteRecipeType } from '../types';
 import DoneRecipesFilter from '../components/DoneRecipesFilter';
+import styles from '../styles/FavoriteRecipesCard.module.css';
 
 export default function FavoriteRecipes() {
   const [favoriteRecipesData, setFavoriteRecipesData] = useState([]);
@@ -29,7 +30,7 @@ export default function FavoriteRecipes() {
   };
 
   return (
-    <div>
+    <div className={ styles.cardContainer }>
       <DoneRecipesFilter handleFilter={ handleFilter } />
       { filterdata.length > 0 && filterdata.map(({ id, image, name, category,
         nationality, type, alcoholicOrNot }, index) => (
