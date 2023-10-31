@@ -22,6 +22,7 @@ describe('<RecipeInProgress />', () => {
   const drinkRote = '/drinks/15997/in-progress';
   const mealRote = '/meals/52771/in-progress';
   const decoration = 'line-through solid black';
+  const buttonId = 'finish-recipe-btn';
 
   test('Falha na resposta da api para retorna o Drink.', async () => {
     vi.spyOn(global, 'fetch').mockImplementation(Promise.reject);
@@ -292,5 +293,67 @@ describe('<RecipeInProgress />', () => {
       },
     });
     expect(ingredients[2]).not.toHaveStyle({ 'text-decoration': decoration });
+  });
+
+  test('Clicar nos inputs das instruções ate que o botão Finish Recipe se ative na tela para Drinks.', async () => {
+    const mockDrink = vi.spyOn(ApiDrinks, 'getDrink');
+    mockDrink.mockImplementation(() => Promise.resolve(dataOneDrinkDetails));
+
+    // localStorage.setItem('inProgressRecipes', JSON.stringify({ drinks: { 15997: [] } }));
+    const { user } = renderWithRouterAndRedux(<App />, { initialEntries: [drinkRote] });
+
+    const loading = await screen.findByAltText('loading');
+    expect(loading).toBeInTheDocument();
+
+    const ingredients = await screen.findAllByTestId(ingredientId);
+    const button = await screen.findByTestId(buttonId);
+
+    expect(button).toBeDisabled();
+    await user.click(ingredients[0]);
+    expect(button).toBeDisabled();
+    await user.click(ingredients[1]);
+    expect(button).toBeDisabled();
+    await user.click(ingredients[2]);
+    expect(button).toBeEnabled();
+
+    await user.click(button);
+
+    // onst title = await screen.findByText('Done Recipe');
+    // expect(title).toBeInTheDocument();
+  });
+
+  test('Clicar nos inputs das instruções ate que o botão Finish Recipe se ative na tela para Meals.', async () => {
+    const mockMeal = vi.spyOn(ApiMeals, 'getMeal');
+    mockMeal.mockImplementation(() => Promise.resolve(dataOneMealDetails));
+
+    vi.spyOn(global, 'fetch').mockImplementation(mockFetchDrinksIngredients as any);
+
+    const { user } = renderWithRouterAndRedux(<App />, { initialEntries: [mealRote] });
+
+    const loading = await screen.findByAltText('loading');
+    expect(loading).toBeInTheDocument();
+
+    const ingredients = await screen.findAllByTestId(ingredientId);
+    const button = await screen.findByTestId(buttonId);
+
+    expect(button).toBeDisabled();
+    await user.click(ingredients[0]);
+    expect(button).toBeDisabled();
+    await user.click(ingredients[1]);
+    expect(button).toBeDisabled();
+    await user.click(ingredients[2]);
+    expect(button).toBeDisabled();
+    await user.click(ingredients[3]);
+    expect(button).toBeDisabled();
+    await user.click(ingredients[4]);
+    expect(button).toBeDisabled();
+    await user.click(ingredients[5]);
+    expect(button).toBeDisabled();
+    await user.click(ingredients[6]);
+    expect(button).toBeDisabled();
+    await user.click(ingredients[7]);
+    expect(button).toBeEnabled();
+
+    await user.click(button);
   });
 });
