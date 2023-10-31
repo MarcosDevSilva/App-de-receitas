@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import ReactPlayer from 'react-player/youtube';
@@ -13,7 +14,7 @@ import { getMeal } from '../services/Meals/ApiMeals';
 import loadingIcon from '../images/spinner.svg';
 
 export default function RecipeInProgress() {
-  const { id } = useParams();
+  const { id } = useParams() as { id: string };
   const { pathname } = useLocation();
   const isMeal: boolean = pathname.includes('/meals');
 
@@ -28,14 +29,11 @@ export default function RecipeInProgress() {
     inProgressRecipes: getLocalData('inProgressRecipes'),
     favoriteRecipes: getLocalData('favoriteRecipes'),
   });
-  // localStorage.setItem('inProgressRecipes', JSON.stringify({ drinks: { 15997: [] } }));
-  const checked = isMeal
-    ? localData.inProgressRecipes.meals[id] : localData.inProgressRecipes.drinks[id];
 
   const [isFavorite, setIsFavorite] = useState(
     localData.favoriteRecipes.some((recipe) => recipe.id === id),
   );
-
+  // TO DO quando fizer o reducer do details e do loading, colocar esse fetch em services
   useEffect(() => {
     const fetchDetails = async () => {
       if (isMeal) {
@@ -70,6 +68,7 @@ export default function RecipeInProgress() {
   const measurements = Object.keys(details)
     .filter((key) => key.includes('Measure'))
     .map((key) => details[key]);
+  // console.log(measurements);
 
   const setToFavorites = () => {
     if (isFavorite) {
@@ -98,37 +97,57 @@ export default function RecipeInProgress() {
     setAlertVisible(true);
     setTimeout(() => setAlertVisible(false), 2000);
   };
+  const isChecked = () => {
+    if (isMeal) {
+      return localData.inProgressRecipes.meals[id]
+        ? localData.inProgressRecipes.meals[id] : [];
+    }
+    return localData.inProgressRecipes.drinks[id]
+      ? localData.inProgressRecipes.drinks[id] : [];
+  };
+
+  const updateInProgress = (value: string) => {
+    if (isMeal) {
+      if (isChecked().includes(value)) {
+        const newList = localData.inProgressRecipes.meals[id]
+          .filter((ing: string) => ing !== value);
+
+        return {
+          drinks: { ...localData.inProgressRecipes.drinks },
+          meals: { ...localData.inProgressRecipes.meals,
+            [id]: newList },
+        };
+      }
+      return {
+        drinks: { ...localData.inProgressRecipes.drinks },
+        meals: { ...localData.inProgressRecipes.meals,
+          [id]: localData.inProgressRecipes.meals[id]
+            ? [...localData.inProgressRecipes.meals[id], value]
+            : [value] },
+      };
+    } if (isChecked().includes(value)) {
+      const newList = localData.inProgressRecipes.drinks[id]
+        .filter((ing: string) => ing !== value);
+
+      return {
+        drinks: { ...localData.inProgressRecipes.drinks,
+          [id]: newList },
+        meals: { ...localData.inProgressRecipes.meals },
+      };
+    }
+    return {
+      drinks: { ...localData.inProgressRecipes.drinks,
+        [id]: localData.inProgressRecipes.drinks[id]
+          ? [...localData.inProgressRecipes.drinks[id], value]
+          : [value] },
+      meals: { ...localData.inProgressRecipes.meals },
+    };
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { labels, value, checked: isChecked } = e.target;
-
-    // fazer lógica pra colocar e tirar da lista de checked e atualizar o local Storage e o estado
-    if (!checked.includes(value)) {
-      checked.push(value);
-    }
-
-    if (isMeal) {
-      setLocalData({
-        ...localData,
-        inProgressRecipes: {
-          drinks: { ...localData.inProgressRecipes.drinks },
-          meals: { ...localData.inProgressRecipes.meals, [id]: checked },
-        },
-      });
-    } else {
-      setLocalData({
-        ...localData,
-        inProgressRecipes: {
-          drinks: { ...localData.inProgressRecipes.drinks, [id]: checked },
-          meals: { ...localData.inProgressRecipes.meals },
-        },
-      });
-    }
-
-    localStorage.setItem(
-      'inProgressRecipes',
-      JSON.stringify(localData.inProgressRecipes),
-    );
+    const { value } = e.target;
+    setLocalData({ ...localData, inProgressRecipes: updateInProgress(value) });
+    localStorage.setItem('inProgressRecipes', JSON.stringify(updateInProgress(value)));
   };
 
   if (isLoading) {
@@ -191,11 +210,16 @@ export default function RecipeInProgress() {
                   id={ `${index}-ingredient-step` }
                   onChange={ handleChange }
                   value={ `${measurements[index]} ${ingredient}` }
+                  checked={ isChecked()
+                    .includes(`${measurements[index]} ${ingredient}`) }
                 />
                 <label
                   htmlFor={ `${index}-ingredient-step` }
                   data-testid={ `${index}-ingredient-step` }
-                  className={ checked.includes(ingredient) ? styles.checked : '' }
+                  className={
+                    isChecked().includes(`${measurements[index]} ${ingredient}`)
+                      ? styles.checked : ''
+                  }
                 >
                   {`${measurements[index]} ${ingredient}`}
                 </label>

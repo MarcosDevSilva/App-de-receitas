@@ -1,17 +1,13 @@
-import { screen, waitFor } from '@testing-library/dom';
+import { screen } from '@testing-library/dom';
 import { vi } from 'vitest';
 import { mockFetchDrinkDetail, mockFetchDrinksIngredients } from './helpers/mocks/api/mockFetchApiDrinks';
 import App from '../App';
 import { renderWithRouterAndRedux } from './helpers/renderWith';
-import { mockFetchMealDetail, mockFetchMealsIngredients } from './helpers/mocks/api/mockFetchMeals';
-import { dataMealsIngredientsChicken } from './helpers/mocks/data/Meals/dataMealsIngredientsChicken';
+import { mockFetchMealDetail } from './helpers/mocks/api/mockFetchMeals';
 import * as ApiMeals from '../services/Meals/ApiMeals';
 import * as ApiDrinks from '../services/Drinks/ApiDrinks';
 import { dataOneMealDetails } from './helpers/mocks/data/Meals/dataOneMealDetails';
-import { dataDrinksIngredientsWater } from './helpers/mocks/data/Drinks/dataDrinksIngredientsWater';
 import { dataOneDrinkDetails } from './helpers/mocks/data/Drinks/dataOneDrinkDetails';
-import { dataMealsChooseRecommetation } from './helpers/mocks/data/Meals/dataMealsChooseRecommetation';
-import { dataDrinksChooseRecommetation } from './helpers/mocks/data/Drinks/dataDrinksChooseRecommetation';
 
 describe('<RecipeInProgress />', () => {
   afterEach(() => {
@@ -25,6 +21,7 @@ describe('<RecipeInProgress />', () => {
   const instructionsId = 'instructions';
   const drinkRote = '/drinks/15997/in-progress';
   const mealRote = '/meals/52771/in-progress';
+  const decoration = 'line-through solid black';
 
   test('Falha na resposta da api para retorna o Drink.', async () => {
     vi.spyOn(global, 'fetch').mockImplementation(Promise.reject);
@@ -42,11 +39,11 @@ describe('<RecipeInProgress />', () => {
     expect(console.log).toBeCalled();
   });
 
-  test.only('Verifique se as informações estão na tela para Drinks.', async () => {
+  test('Verifique se as informações estão na tela para Drinks.', async () => {
     const mockDrink = vi.spyOn(ApiDrinks, 'getDrink');
     mockDrink.mockImplementation(() => Promise.resolve(dataOneDrinkDetails));
 
-    localStorage.setItem('inProgressRecipes', JSON.stringify({ drinks: { 15997: [] } }));
+    // localStorage.setItem('inProgressRecipes', JSON.stringify({ drinks: { 15997: [] } }));
     renderWithRouterAndRedux(<App />, { initialEntries: [drinkRote] });
 
     const loading = await screen.findByAltText('loading');
@@ -185,5 +182,115 @@ describe('<RecipeInProgress />', () => {
 
     const link = await screen.findByText('Link copied!');
     expect(link).toBeInTheDocument();
+  });
+
+  test('Clicar nos inputs das instruções que estão na tela para Drinks.', async () => {
+    const firstChoose = 'null Ginger ale';
+    const mockDrink = vi.spyOn(ApiDrinks, 'getDrink');
+    mockDrink.mockImplementation(() => Promise.resolve(dataOneDrinkDetails));
+
+    // localStorage.setItem('inProgressRecipes', JSON.stringify({ drinks: { 15997: [] } }));
+    const { user } = renderWithRouterAndRedux(<App />, { initialEntries: [drinkRote] });
+
+    const loading = await screen.findByAltText('loading');
+    expect(loading).toBeInTheDocument();
+
+    const ingredients = await screen.findAllByTestId(ingredientId);
+
+    await user.click(ingredients[1]);
+
+    expect(ingredients[1]).toHaveStyle({ 'text-decoration': decoration });
+
+    expect(JSON.parse(localStorage.getItem('inProgressRecipes') as string)).toEqual({
+      drinks: {
+        15997: [
+          firstChoose,
+        ],
+      },
+      meals: {},
+    });
+
+    await user.click(ingredients[2]);
+
+    expect(ingredients[2]).toHaveStyle({ 'text-decoration': decoration });
+    console.log(localStorage.getItem('inProgressRecipes'));
+
+    expect(JSON.parse(localStorage.getItem('inProgressRecipes') as string)).toEqual({
+      drinks: {
+        15997: [
+          firstChoose,
+          'null Ice',
+        ],
+      },
+      meals: {},
+    });
+
+    await user.click(ingredients[2]);
+
+    expect(JSON.parse(localStorage.getItem('inProgressRecipes') as string)).toEqual({
+      drinks: {
+        15997: [
+          firstChoose,
+        ],
+      },
+      meals: {},
+    });
+    expect(ingredients[2]).not.toHaveStyle({ 'text-decoration': decoration });
+  });
+
+  test('Clicar nos inputs das instruções que estão na tela para Meals.', async () => {
+    const firstChoose = '1 pound penne rigate';
+    const mockMeal = vi.spyOn(ApiMeals, 'getMeal');
+    mockMeal.mockImplementation(() => Promise.resolve(dataOneMealDetails));
+
+    vi.spyOn(global, 'fetch').mockImplementation(mockFetchDrinksIngredients as any);
+
+    const { user } = renderWithRouterAndRedux(<App />, { initialEntries: [mealRote] });
+
+    const loading = await screen.findByAltText('loading');
+    expect(loading).toBeInTheDocument();
+
+    const ingredients = await screen.findAllByTestId(ingredientId);
+
+    await user.click(ingredients[0]);
+
+    expect(ingredients[0]).toHaveStyle({ 'text-decoration': decoration });
+    console.log(JSON.parse(localStorage.getItem('inProgressRecipes') as string));
+
+    expect(JSON.parse(localStorage.getItem('inProgressRecipes') as string)).toEqual({
+      drinks: {},
+      meals: {
+        52771: [
+          firstChoose,
+        ],
+      },
+    });
+
+    await user.click(ingredients[2]);
+
+    expect(ingredients[2]).toHaveStyle({ 'text-decoration': decoration });
+    console.log(localStorage.getItem('inProgressRecipes'));
+
+    expect(JSON.parse(localStorage.getItem('inProgressRecipes') as string)).toEqual({
+      drinks: {},
+      meals: {
+        52771: [
+          firstChoose,
+          '3 cloves garlic',
+        ],
+      },
+    });
+
+    await user.click(ingredients[2]);
+
+    expect(JSON.parse(localStorage.getItem('inProgressRecipes') as string)).toEqual({
+      drinks: {},
+      meals: {
+        52771: [
+          firstChoose,
+        ],
+      },
+    });
+    expect(ingredients[2]).not.toHaveStyle({ 'text-decoration': decoration });
   });
 });

@@ -168,17 +168,16 @@ export default function RecipeDetails() {
         <section>
           <h2>Ingredients</h2>
           <ul>
-            {ingredients.filter((ingredient) => ingredient !== null)
-              .map((ingredient, index) => {
-                return (
-                  <li
-                    key={ `${index}-ingredient-name-and-measure` }
-                    data-testid={ `${index}-ingredient-name-and-measure` }
-                  >
-                    {`${measurements[index]} ${ingredient}`}
-                  </li>
-                );
-              })}
+            {ingredients.map((ingredient, index) => {
+              return (
+                <li
+                  key={ `${index}-ingredient-name-and-measure` }
+                  data-testid={ `${index}-ingredient-name-and-measure` }
+                >
+                  {`${measurements[index]} ${ingredient}`}
+                </li>
+              );
+            })}
           </ul>
         </section>
         <section>
