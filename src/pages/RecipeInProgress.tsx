@@ -277,7 +277,6 @@ export default function RecipeInProgress() {
           disabled={
           isChecked().length !== ingredients.length
         }
-          data-testid="finish-recipe-btn"
           onClick={ handleClick }
         >
           Finish Recipe

@@ -23,6 +23,10 @@ describe('<RecipeInProgress />', () => {
   const mealRote = '/meals/52771/in-progress';
   const decoration = 'line-through solid black';
   const buttonId = 'finish-recipe-btn';
+  const alcoolName = 'Optional alcohol';
+  const mealName = 'Spicy Arrabiata Penne';
+  const urlImgDrinks = 'https://www.thecocktaildb.com/images/media/drink/vyxwut1468875960.jpg';
+  const urlImgMeals = 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg';
 
   test('Falha na resposta da api para retorna o Drink.', async () => {
     vi.spyOn(global, 'fetch').mockImplementation(Promise.reject);
@@ -56,8 +60,8 @@ describe('<RecipeInProgress />', () => {
     const ingredients = await screen.findAllByTestId(ingredientId);
     const instructions = await screen.findByTestId(instructionsId);
 
-    expect(photo).toHaveAttribute('src', 'https://www.thecocktaildb.com/images/media/drink/vyxwut1468875960.jpg');
-    expect(category.textContent).toBe('Optional alcohol');
+    expect(photo).toHaveAttribute('src', urlImgDrinks);
+    expect(category.textContent).toBe(alcoolName);
     expect(title.textContent).toBe('GG');
     expect(ingredients).toHaveLength(3);
     const strInstructions = 'Pour the Galliano liqueur over ice. Fill the remainder of the';
@@ -83,13 +87,45 @@ describe('<RecipeInProgress />', () => {
     const instructions = await screen.findByTestId(instructionsId);
     const video = await screen.findByTestId('video');
 
-    expect(photo).toHaveAttribute('src', 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg');
+    expect(photo).toHaveAttribute('src', urlImgMeals);
     expect(category.textContent).toBe('Vegetarian');
-    expect(title.textContent).toBe('Spicy Arrabiata Penne');
+    expect(title.textContent).toBe(mealName);
     expect(ingredients).toHaveLength(8);
     const strInstructions = 'Bring a large pot of water to a boil.';
     expect(instructions.textContent).toContain(strInstructions);
     expect(video).toBeInTheDocument();
+  });
+
+  test('Verifique se as informações estão que estão no localStore na tela para Drinks.', async () => {
+    const mockDrink = vi.spyOn(ApiDrinks, 'getDrink');
+    mockDrink.mockImplementation(() => Promise.resolve(dataOneDrinkDetails));
+    const name = 'null Ginger ale';
+    localStorage.setItem('inProgressRecipes', JSON.stringify({ drinks: { 15997: [name] } }));
+    renderWithRouterAndRedux(<App />, { initialEntries: [drinkRote] });
+
+    const loading = await screen.findByAltText('loading');
+    expect(loading).toBeInTheDocument();
+
+    const ingredients = await screen.findAllByTestId(ingredientId);
+    screen.debug();
+    expect(ingredients[1]).toHaveStyle({ 'text-decoration': decoration });
+  });
+
+  test('Verifique se as informações que estão no localStore na tela para Meals.', async () => {
+    const mockMeal = vi.spyOn(ApiMeals, 'getMeal');
+    mockMeal.mockImplementation(() => Promise.resolve(dataOneMealDetails));
+
+    vi.spyOn(global, 'fetch').mockImplementation(mockFetchDrinksIngredients as any);
+    const meal = '1 pound penne rigate';
+
+    localStorage.setItem('inProgressRecipes', JSON.stringify({ meals: { 52771: [meal] } }));
+    renderWithRouterAndRedux(<App />, { initialEntries: [mealRote] });
+
+    const loading = await screen.findByAltText('loading');
+    expect(loading).toBeInTheDocument();
+
+    const ingredients = await screen.findAllByTestId(ingredientId);
+    expect(ingredients[0]).toHaveStyle({ 'text-decoration': decoration });
   });
 
   test('Favoritar o Drink e desfavoritar.', async () => {
@@ -112,7 +148,7 @@ describe('<RecipeInProgress />', () => {
           type: 'drink',
           nationality: '',
           category: 'Ordinary Drink',
-          alcoholicOrNot: 'Optional alcohol',
+          alcoholicOrNot: alcoolName,
           name: 'GG',
           image: 'https://www.thecocktaildb.com/images/media/drink/vyxwut1468875960.jpg' },
       ],
@@ -144,8 +180,8 @@ describe('<RecipeInProgress />', () => {
           nationality: 'Italian',
           category: 'Vegetarian',
           alcoholicOrNot: '',
-          name: 'Spicy Arrabiata Penne',
-          image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
+          name: mealName,
+          image: urlImgMeals,
         },
       ],
     );
@@ -214,8 +250,6 @@ describe('<RecipeInProgress />', () => {
     await user.click(ingredients[2]);
 
     expect(ingredients[2]).toHaveStyle({ 'text-decoration': decoration });
-    console.log(localStorage.getItem('inProgressRecipes'));
-
     expect(JSON.parse(localStorage.getItem('inProgressRecipes') as string)).toEqual({
       drinks: {
         15997: [
@@ -256,8 +290,6 @@ describe('<RecipeInProgress />', () => {
     await user.click(ingredients[0]);
 
     expect(ingredients[0]).toHaveStyle({ 'text-decoration': decoration });
-    console.log(JSON.parse(localStorage.getItem('inProgressRecipes') as string));
-
     expect(JSON.parse(localStorage.getItem('inProgressRecipes') as string)).toEqual({
       drinks: {},
       meals: {
@@ -270,8 +302,6 @@ describe('<RecipeInProgress />', () => {
     await user.click(ingredients[2]);
 
     expect(ingredients[2]).toHaveStyle({ 'text-decoration': decoration });
-    console.log(localStorage.getItem('inProgressRecipes'));
-
     expect(JSON.parse(localStorage.getItem('inProgressRecipes') as string)).toEqual({
       drinks: {},
       meals: {
@@ -315,11 +345,30 @@ describe('<RecipeInProgress />', () => {
     expect(button).toBeDisabled();
     await user.click(ingredients[2]);
     expect(button).toBeEnabled();
-
+    await user.click(ingredients[2]);
+    expect(button).toBeDisabled();
+    await user.click(ingredients[2]);
+    expect(button).toBeEnabled();
     await user.click(button);
 
-    // onst title = await screen.findByText('Done Recipe');
-    // expect(title).toBeInTheDocument();
+    const data = JSON.parse(localStorage.getItem('doneRecipes') as string);
+    expect(JSON.parse(localStorage.getItem('doneRecipes') as string)).toEqual([
+      {
+        id: '15997',
+        type: 'drink',
+        nationality: '',
+        category: 'Ordinary Drink',
+        alcoholicOrNot: alcoolName,
+        name: 'GG',
+        image: urlImgDrinks,
+        tags: [],
+        doneDate: data[0].doneDate,
+      },
+    ]);
+    const title = await screen.findByText(alcoolName);
+    expect(title).toBeInTheDocument();
+
+    expect(JSON.parse(localStorage.getItem('inProgressRecipes') as string)).toEqual({ meals: {}, drinks: {} });
   });
 
   test('Clicar nos inputs das instruções ate que o botão Finish Recipe se ative na tela para Meals.', async () => {
@@ -353,7 +402,35 @@ describe('<RecipeInProgress />', () => {
     expect(button).toBeDisabled();
     await user.click(ingredients[7]);
     expect(button).toBeEnabled();
+    await user.click(ingredients[7]);
+    expect(button).toBeDisabled();
+    expect(button).toBeDisabled();
+    await user.click(ingredients[7]);
 
     await user.click(button);
+
+    const data = JSON.parse(localStorage.getItem('doneRecipes') as string);
+    expect(JSON.parse(localStorage.getItem('doneRecipes') as string)).toEqual(
+      [
+        {
+          alcoholicOrNot: '',
+          category: 'Vegetarian',
+          doneDate: data[0].doneDate,
+          id: '52771',
+          image: urlImgMeals,
+          name: mealName,
+          nationality: 'Italian',
+          tags: [
+            'Pasta',
+            'Curry',
+          ],
+          type: 'meal',
+        },
+      ],
+    );
+    const title = await screen.findByText('Spicy Arrabiata Penne');
+    expect(title).toBeInTheDocument();
+
+    expect(JSON.parse(localStorage.getItem('inProgressRecipes') as string)).toEqual({ meals: {}, drinks: {} });
   });
 });
