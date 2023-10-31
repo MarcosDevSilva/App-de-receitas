@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import ReactPlayer from 'react-player/youtube';
 import Icon from '../components/Icon';
 import shareIcon from '../images/shareIcon.svg';
@@ -15,6 +15,7 @@ import loadingIcon from '../images/spinner.svg';
 export default function RecipeInProgress() {
   const { id } = useParams() as { id: string };
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const isMeal: boolean = pathname.includes('/meals');
 
   // TO DO passar is loading para redux??
@@ -145,6 +146,10 @@ export default function RecipeInProgress() {
     localStorage.setItem('inProgressRecipes', JSON.stringify(updateInProgress(value)));
   };
 
+  const handleClick = () => {
+    navigate('/done-recipes');
+  };
+
   if (isLoading) {
     return (
       <div className={ styles.loading }>
@@ -241,6 +246,7 @@ export default function RecipeInProgress() {
           disabled={
           isChecked().length !== ingredients.length
         }
+          onClick={ handleClick }
         >
           Finish Recipe
 
