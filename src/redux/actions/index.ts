@@ -37,97 +37,73 @@ export const loadingAction = (isLoading: boolean) => ({
 
 export const fetchDrinksIngrediant = (ingredients: string) => {
   return async (dispatch: Dispatch) => {
-    try {
-      dispatch(loadingAction(true));
-      dispatch(requestStarted());
-      searchDrinksIngredients(ingredients)
-        .then((response) => {
-          dispatch(loadingAction(false));
-          dispatch(requestSuccessfulDrinks(response.drinks));
-        });
-    } catch (error: any) {
-      dispatch(requestFailed());
-    }
+    dispatch(loadingAction(true));
+    dispatch(requestStarted());
+    searchDrinksIngredients(ingredients)
+      .then((response) => {
+        dispatch(loadingAction(false));
+        dispatch(requestSuccessfulDrinks(response.drinks));
+      }).catch(() => dispatch(requestFailed()));
   };
 };
 
 export const fetchDrinksName = (name: string) => {
   return async (dispatch: Dispatch) => {
-    try {
-      dispatch(loadingAction(true));
-      dispatch(requestStarted());
-      searchDrinksName(name)
-        .then((response) => {
-          dispatch(loadingAction(false));
-          dispatch(requestSuccessfulDrinks(response.drinks));
-        });
-    } catch (error: any) {
-      dispatch(requestFailed());
-    }
+    dispatch(loadingAction(true));
+    dispatch(requestStarted());
+    searchDrinksName(name)
+      .then((response) => {
+        dispatch(loadingAction(false));
+        dispatch(requestSuccessfulDrinks(response.drinks));
+      }).catch(() => dispatch(requestFailed()));
   };
 };
 
 export const fetchDrinksFirstLetter = (letter: string) => {
   return async (dispatch: Dispatch) => {
-    try {
-      dispatch(loadingAction(true));
-      dispatch(requestStarted());
-      searchDrinksFirstLetter(letter)
-        .then((response) => {
-          dispatch(loadingAction(false));
-          dispatch(requestSuccessfulDrinks(response.drinks));
-        });
-    } catch (error: any) {
-      dispatch(requestFailed());
-    }
+    dispatch(loadingAction(true));
+    dispatch(requestStarted());
+    searchDrinksFirstLetter(letter)
+      .then((response) => {
+        dispatch(loadingAction(false));
+        dispatch(requestSuccessfulDrinks(response.drinks));
+      }).catch(() => dispatch(requestFailed()));
   };
 };
 
 export const fetchMealsIngrediant = (ingredients: string) => {
   return async (dispatch: Dispatch) => {
-    try {
-      dispatch(loadingAction(true));
-      dispatch(requestStarted());
-      searchMealsIngredients(ingredients)
-        .then((response) => {
-          dispatch(loadingAction(false));
-          dispatch(requestSuccessfulMeals(response.meals));
-        });
-    } catch (error: any) {
-      dispatch(requestFailed());
-    }
+    dispatch(loadingAction(true));
+    dispatch(requestStarted());
+    searchMealsIngredients(ingredients)
+      .then((response) => {
+        dispatch(loadingAction(false));
+        dispatch(requestSuccessfulMeals(response.meals));
+      }).catch(() => dispatch(requestFailed()));
   };
 };
 
 export const fetchMealsName = (name: string) => {
   return async (dispatch: Dispatch) => {
-    try {
-      dispatch(loadingAction(true));
-      dispatch(requestStarted());
-      searchMealsName(name)
-        .then((response) => {
-          dispatch(loadingAction(false));
-          dispatch(requestSuccessfulMeals(response.meals));
-        });
-    } catch (error: any) {
-      dispatch(requestFailed());
-    }
+    dispatch(loadingAction(true));
+    dispatch(requestStarted());
+    searchMealsName(name)
+      .then((response) => {
+        dispatch(loadingAction(false));
+        dispatch(requestSuccessfulMeals(response.meals));
+      }).catch(() => dispatch(requestFailed()));
   };
 };
 
 export const fetchMealsFirstLetter = (letter: string) => {
   return async (dispatch: Dispatch) => {
-    try {
-      dispatch(loadingAction(true));
-      dispatch(requestStarted());
-      searchMealsFirstLetter(letter)
-        .then((response) => {
-          dispatch(loadingAction(false));
-          dispatch(requestSuccessfulMeals(response.meals));
-        });
-    } catch (error: any) {
-      dispatch(requestFailed());
-    }
+    dispatch(loadingAction(true));
+    dispatch(requestStarted());
+    searchMealsFirstLetter(letter)
+      .then((response) => {
+        dispatch(loadingAction(false));
+        dispatch(requestSuccessfulMeals(response.meals));
+      }).catch(() => dispatch(requestFailed()));
   };
 };
 

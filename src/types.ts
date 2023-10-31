@@ -172,3 +172,27 @@ export type LocalDataType = {
   inProgressRecipes: InProgressRecipeType,
   favoriteRecipes: FavoriteRecipeType[],
 };
+
+export type DoneRecipesCardType = {
+  id: string,
+  category: string,
+  name: string,
+  img: string,
+  doneDate: string,
+  tags: string[],
+  nationality: string,
+  index: number,
+  type: string,
+  alcoholicOrNot: string
+};
+
+export type FavoriteRecipesCardType = {
+  id: string,
+  category: string,
+  name: string,
+  img: string,
+  nationality: string,
+  index: number,
+  type: string,
+  alcoholicOrNot: string
+};
