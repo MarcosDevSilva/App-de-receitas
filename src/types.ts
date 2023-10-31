@@ -185,3 +185,15 @@ export type DoneRecipesCardType = {
   type: string,
   alcoholicOrNot: string
 };
+
+export type FavoriteRecipesCardType = {
+  id: string,
+  category: string,
+  name: string,
+  img: string,
+  nationality: string,
+  index: number,
+  type: string,
+  alcoholicOrNot: string
+  removeFavorite: (id: string) => void,
+};
