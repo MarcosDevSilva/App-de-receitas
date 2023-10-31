@@ -17,7 +17,7 @@ import { dataDrinksLetterW } from './helpers/mocks/data/Drinks/dataDrinksLetterW
 import { dataMealsReturnEmpty } from './helpers/mocks/data/Meals/dataMealsReturnEmpty';
 import { dataDrinksReturnEmpty } from './helpers/mocks/data/Drinks/dataDrinksReturnEmpty';
 
-describe.skip('<SearchBar />', () => {
+describe('<SearchBar />', () => {
   afterEach(() => {
     vi.clearAllMocks();
   });
