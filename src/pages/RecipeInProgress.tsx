@@ -159,7 +159,7 @@ export default function RecipeInProgress() {
       name: isMeal ? details.strMeal : details.strDrink,
       image: isMeal ? details.strMealThumb : details.strDrinkThumb,
       doneDate: dateNow.toISOString(),
-      tags: details.strTags,
+      tags: details.strTags ? details.strTags.split(',') : [],
     }]));
 
     const newList = isMeal ? localData.inProgressRecipes.meals
