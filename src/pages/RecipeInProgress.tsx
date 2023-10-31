@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import ReactPlayer from 'react-player/youtube';
 import Icon from '../components/Icon';
 import shareIcon from '../images/shareIcon.svg';
-import styles from '../styles/RecipeDetails.module.css';
+import styles from '../styles/RecipeInProgress.module.css';
 import getLocalData from '../helpers/getLocalData';
 import { LocalDataType } from '../types';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
@@ -15,7 +15,7 @@ import loadingIcon from '../images/spinner.svg';
 export default function RecipeInProgress() {
   const { id } = useParams();
   const { pathname } = useLocation();
-  // const navigate = useNavigate();
+  const isMeal: boolean = pathname.includes('/meals');
 
   // TO DO passar is loading para redux??
   const [isLoading, setIsLoading] = useState(true);
@@ -23,16 +23,18 @@ export default function RecipeInProgress() {
 
   // TO DO passar details e localData para redux
   const [details, setDetails] = useState<any>({});
-  const localData: LocalDataType = {
+  const [localData, setLocalData] = useState<LocalDataType>({
     doneRecipes: getLocalData('doneRecipes'),
     inProgressRecipes: getLocalData('inProgressRecipes'),
     favoriteRecipes: getLocalData('favoriteRecipes'),
-  };
+  });
+  // localStorage.setItem('inProgressRecipes', JSON.stringify({ drinks: { 15997: [] } }));
+  const checked = isMeal
+    ? localData.inProgressRecipes.meals[id] : localData.inProgressRecipes.drinks[id];
+
   const [isFavorite, setIsFavorite] = useState(
     localData.favoriteRecipes.some((recipe) => recipe.id === id),
   );
-
-  const isMeal: boolean = pathname.includes('/meals');
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -97,6 +99,38 @@ export default function RecipeInProgress() {
     setTimeout(() => setAlertVisible(false), 2000);
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { labels, value, checked: isChecked } = e.target;
+
+    // fazer lógica pra colocar e tirar da lista de checked e atualizar o local Storage e o estado
+    if (!checked.includes(value)) {
+      checked.push(value);
+    }
+
+    if (isMeal) {
+      setLocalData({
+        ...localData,
+        inProgressRecipes: {
+          drinks: { ...localData.inProgressRecipes.drinks },
+          meals: { ...localData.inProgressRecipes.meals, [id]: checked },
+        },
+      });
+    } else {
+      setLocalData({
+        ...localData,
+        inProgressRecipes: {
+          drinks: { ...localData.inProgressRecipes.drinks, [id]: checked },
+          meals: { ...localData.inProgressRecipes.meals },
+        },
+      });
+    }
+
+    localStorage.setItem(
+      'inProgressRecipes',
+      JSON.stringify(localData.inProgressRecipes),
+    );
+  };
+
   if (isLoading) {
     return (
       <div className={ styles.loading }>
@@ -149,19 +183,25 @@ export default function RecipeInProgress() {
         {alertVisible && <span className={ styles.copyAlert }>Link copied!</span>}
         <section>
           <h2>Ingredients</h2>
-          <ul>
-            {ingredients.filter((ingredient) => ingredient !== null)
-              .map((ingredient, index) => {
-                return (
-                  <li
-                    key={ `${index}-ingredient-name-and-measure` }
-                    data-testid={ `${index}-ingredient-name-and-measure` }
-                  >
-                    {`${measurements[index]} ${ingredient}`}
-                  </li>
-                );
-              })}
-          </ul>
+          {ingredients.map((ingredient, index) => {
+            return (
+              <div key={ `${index}-ingredient-step` }>
+                <input
+                  type="checkbox"
+                  id={ `${index}-ingredient-step` }
+                  onChange={ handleChange }
+                  value={ `${measurements[index]} ${ingredient}` }
+                />
+                <label
+                  htmlFor={ `${index}-ingredient-step` }
+                  data-testid={ `${index}-ingredient-step` }
+                  className={ checked.includes(ingredient) ? styles.checked : '' }
+                >
+                  {`${measurements[index]} ${ingredient}`}
+                </label>
+              </div>
+            );
+          })}
         </section>
         <section>
           <h2>Instructions</h2>
@@ -181,7 +221,7 @@ export default function RecipeInProgress() {
             />
           </section>
         )}
-        <button>Finish Recipe</button>
+        <button data-testid="finish-recipe-btn">Finish Recipe</button>
       </main>
     </>
   );
