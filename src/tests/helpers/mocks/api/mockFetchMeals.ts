@@ -1,6 +1,3 @@
-import { dataMealsAll } from '../data/Meals/dataMealsAll';
-import { dataMealsCategories } from '../data/Meals/dataMealsCategories';
-import { dataMealsCategoryGoat } from '../data/Meals/dataMealsCategoryGoat';
 import { dataMealsLetterC } from '../data/Meals/dataMealsLetterC';
 import { dataMealsNameChicken } from '../data/Meals/dataMealsNameChicken';
 import { dataMealsReturn1Element } from '../data/Meals/dataMealsReturn1Element';
@@ -42,4 +39,22 @@ export const mockFetchMealDetail = () => Promise.resolve({
   status: 200,
   ok: true,
   json: () => Promise.resolve(dataOneMealDetails),
+});
+
+export const mockFetchMealsReturnAll = () => Promise.resolve({
+  status: 200,
+  ok: true,
+  json: () => Promise.resolve(dataMealsAll),
+});
+
+export const mockFetchMealsCategories = () => Promise.resolve({
+  status: 200,
+  ok: true,
+  json: () => Promise.resolve(dataMealsCategories),
+});
+
+export const mockFetchMealsPerCategories = () => Promise.resolve({
+  status: 200,
+  ok: true,
+  json: () => Promise.resolve(dataMealsCategoryGoat),
 });
