@@ -1,84 +1,96 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import getLocalData from '../helpers/getLocalData';
-import { FavoriteRecipesCardType, LocalDataType } from '../types';
+import styles from '../styles/DoneRecipesCard.module.css';
+import { FavoriteRecipesCardType } from '../types';
 
-function FavoriteRecipesCard({ type, id }: FavoriteRecipesCardType) {
-  const [alertVisible, setAlertVisible] = useState(false);
-  const localData: LocalDataType = {
-    doneRecipes: getLocalData('doneRecipes'),
-    inProgressRecipes: getLocalData('inProgressRecipes'),
-    favoriteRecipes: getLocalData('favoriteRecipes'),
-  };
-  const [isFavorite, setIsFavorite] = useState(
-    localData.favoriteRecipes.some((recipe) => recipe.id === id),
-  );
-
+function FavoriteRecipesCard({ id, img, name, category,
+  nationality, index, type, alcoholicOrNot, removeFavorite }: FavoriteRecipesCardType) {
+  const [shared, setShared] = useState(false);
+  // const [favorited, setFavorited] = useState(getLocalData('favoriteRecipes'));
+  // // const [isFavorite, setIsFavorite] = useState(
+  // //   localData.favoriteRecipes.some((recipe: any) => recipe.id === id),
+  // // );
+  // console.log(favorited);
   const copyToClipboard = () => {
     const pathname = window.location.host;
     const url = `http://${pathname}/${type}s/${id}`;
     navigator.clipboard.writeText(url);
-    setAlertVisible((prevState) => !prevState);
+    setShared((prevState) => !prevState);
   };
 
-  // const setToFavorites = () => {
-  //   if (isFavorite) {
-  //     const newFavList = localData.favoriteRecipes.filter((recipe) => recipe.id !== id);
-  //     localStorage.setItem('favoriteRecipes', JSON.stringify(newFavList));
-  //     setIsFavorite(false);
-  //   } else {
-  //     localStorage.setItem(
-  //       'favoriteRecipes',
-  //       JSON.stringify([...localData.favoriteRecipes, {
-  //         id: isMeal ? details.idMeal : details.idDrink,
-  //         type: isMeal ? 'meal' : 'drink',
-  //         nationality: isMeal ? details.strArea : '',
-  //         category: details.strCategory,
-  //         alcoholicOrNot: isMeal ? '' : details.strAlcoholic,
-  //         name: isMeal ? details.strMeal : details.strDrink,
-  //         image: isMeal ? details.strMealThumb : details.strDrinkThumb,
-  //       }]),
-  //     );
-  //     setIsFavorite(true);
-  //   }
+  // const removeFavorite = () => {
+  //   const favList = favorited.filter((recipe: any) => recipe.id !== id);
+  //   localStorage.setItem('favoriteRecipes', JSON.stringify(favList));
+  //   setFavorited(favList);
   // };
 
   return (
-    <div>
-      {alertVisible && <p>Link copiado!</p>}
-      {getLocalData('favoriteRecipes').map((recipe: any, index: number) => (
-        <div key={ recipe.id }>
+    <div className={ styles.container } id={ id }>
+      <div>
+        <Link to={ `../${type}s/${id}` }>
           <img
-            src={ recipe.image }
-            alt={ recipe.name }
+            src={ img }
+            alt={ name }
+            className={ styles.img }
             data-testid={ `${index}-horizontal-image` }
-            style={ { width: '100px' } }
           />
-          <p data-testid={ `${index}-horizontal-name` }>{recipe.name}</p>
-          <p data-testid={ `${index}-horizontal-top-text` }>
-            {recipe.type === 'meal' ? recipe.nationality : recipe.alcoholicOrNot}
-            {' - '}
-            {recipe.category}
-          </p>
+        </Link>
+      </div>
+      <div className={ styles.content }>
+        <div className={ styles.header }>
+          <div className={ styles.headercontent }>
+
+            <Link
+              to={ `../${type}s/${id}` }
+              className={ styles.title }
+              data-testid={ `${index}-horizontal-name` }
+            >
+              { name }
+            </Link>
+
+            { (type === 'meal') && (
+              <p
+                className={ styles.category }
+                data-testid={ `${index}-horizontal-top-text` }
+              >
+                {`${nationality} - ${category}`}
+              </p>
+            )}
+
+            { (type === 'drink') && (
+              <p
+                className={ styles.category }
+                data-testid={ `${index}-horizontal-top-text` }
+              >
+                {alcoholicOrNot}
+              </p>
+            )}
+          </div>
           <button
-            data-testid={ `${index}-horizontal-share-btn` }
+            className={ styles.sharebutton }
             onClick={ () => copyToClipboard() }
           >
-            <img
+            {!shared && <img
               src={ shareIcon }
-              alt="share icon"
-            />
+              alt="Share Recipe"
+              className={ styles.icon }
+              data-testid={ `${index}-horizontal-share-btn` }
+            />}
+            {shared && <span className={ styles.copied }>Link copied!</span>}
           </button>
-          <button>
+          <button className={ styles.sharebutton } onClick={ () => removeFavorite(id) }>
             <img
-              data-testid={ `${index}-horizontal-favorite-btn` }
               src={ blackHeartIcon }
-              alt="Favorite Icon"
+              alt="heart"
+              data-testid={ `${index}-horizontal-favorite-btn` }
             />
           </button>
         </div>
-      ))}
+      </div>
     </div>
   );
 }

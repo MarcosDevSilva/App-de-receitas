@@ -195,4 +195,5 @@ export type FavoriteRecipesCardType = {
   index: number,
   type: string,
   alcoholicOrNot: string
+  removeFavorite: (id: string) => void,
 };

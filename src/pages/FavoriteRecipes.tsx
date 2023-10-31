@@ -1,63 +1,84 @@
-import { useState } from 'react';
-import getLocalData from '../helpers/getLocalData';
-import shareIcon from '../images/shareIcon.svg';
-import blackHeartIcon from '../images/blackHeartIcon.svg';
+import { useEffect, useState } from 'react';
+import FavoriteRecipesCard from '../components/FavoriteRecipesCard';
+import { FavoriteRecipeType } from '../types';
+import DoneRecipesFilter from '../components/DoneRecipesFilter';
 
 export default function FavoriteRecipes() {
-  const [alertVisible, setAlertVisible] = useState(false);
-  const [currentFoodType, setCurrentFoodType] = useState('');
+  const [favoriteRecipesData, setFavoriteRecipesData] = useState([]);
+  const [favoriteRecipesFilter, setFavoriteRecipesFilter] = useState('all');
 
-  // Those 2 functions simply does not work and I don't know why
-  const handleCopy = (id: number) => {
-    handleDrinkOrMeal({ type: currentFoodType });
-    navigator.clipboard.writeText(`http://localhost:3000/${currentFoodType}/${id}`);
-    setAlertVisible(true);
-    setTimeout(() => setAlertVisible(false), 2000);
+  useEffect(() => {
+    const data = localStorage.getItem('favoriteRecipes');
+    const dataJSON = data ? JSON.parse(data) : [];
+    setFavoriteRecipesData(dataJSON);
+  }, []);
+
+  const filterdata = (favoriteRecipesFilter === 'all')
+    ? favoriteRecipesData
+    : favoriteRecipesData
+      .filter((item : FavoriteRecipeType) => item.type === favoriteRecipesFilter);
+
+  const handleFilter = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    setFavoriteRecipesFilter(e.currentTarget.name);
   };
 
-  const handleDrinkOrMeal = (item: any) => {
-    setCurrentFoodType(item.type);
+  const removeFavorite = (id: string) => {
+    const favList = favoriteRecipesData.filter((recipe: any) => recipe.id !== id);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favList));
+    setFavoriteRecipesData(favList);
   };
 
   return (
     <div>
-      <h1>Favorite Recipes</h1>
-      {alertVisible && <p>Link copiado!</p>}
-      <div>
-        {getLocalData('favoriteRecipes').map((recipe: any, index: number) => (
-          <div key={ recipe.id }>
-            <img
-              src={ recipe.image }
-              alt={ recipe.name }
-              data-testid={ `${index}-horizontal-image` }
-              style={ { width: '100px' } }
-            />
-            <p data-testid={ `${index}-horizontal-name` }>{recipe.name}</p>
-            <p data-testid={ `${index}-horizontal-top-text` }>
-              {recipe.type === 'meal' ? recipe.nationality : recipe.alcoholicOrNot}
-              {' - '}
-              {recipe.category}
-            </p>
-            <button
-              data-testid={ `${index}-horizontal-share-btn` }
-              onClick={ () => handleCopy(recipe.id) }
-            >
-              <img
-                src={ shareIcon }
-                alt="share icon"
-              />
-            </button>
-
-            <button>
-              <img
-                data-testid={ `${index}-horizontal-favorite-btn` }
-                src={ blackHeartIcon }
-                alt="Favorite Icon"
-              />
-            </button>
-          </div>
-        ))}
-      </div>
+      <DoneRecipesFilter handleFilter={ handleFilter } />
+      { filterdata.length > 0 && filterdata.map(({ id, image, name, category,
+        nationality, type, alcoholicOrNot }, index) => (
+          <FavoriteRecipesCard
+            key={ id }
+            id={ id }
+            img={ image }
+            name={ name }
+            category={ category }
+            nationality={ nationality }
+            index={ index }
+            type={ type }
+            alcoholicOrNot={ alcoholicOrNot }
+            removeFavorite={ () => removeFavorite(id) }
+          />))}
     </div>
   );
 }
+
+// {getLocalData('favoriteRecipes').map((recipe: any, index: number) => (
+//   <div key={ recipe.id }>
+//     <img
+//       src={ recipe.image }
+//       alt={ recipe.name }
+//       data-testid={ `${index}-horizontal-image` }
+//       style={ { width: '100px' } }
+//     />
+//     <p data-testid={ `${index}-horizontal-name` }>{recipe.name}</p>
+//     <p data-testid={ `${index}-horizontal-top-text` }>
+//       {recipe.type === 'meal' ? recipe.nationality : recipe.alcoholicOrNot}
+//       {' - '}
+//       {recipe.category}
+//     </p>
+//     <button
+//       data-testid={ `${index}-horizontal-share-btn` }
+//       onClick={ () => copyToClipboard() }
+//     >
+//       <img
+//         src={ shareIcon }
+//         alt="share icon"
+//       />
+//     </button>
+//     <button>
+//       <img
+//         data-testid={ `${index}-horizontal-favorite-btn` }
+//         src={ blackHeartIcon }
+//         alt="Favorite Icon"
+//       />
+//     </button>
+//   </div>
+// ))}
+// </div>
