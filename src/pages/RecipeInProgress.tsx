@@ -15,6 +15,7 @@ import loadingIcon from '../images/spinner.svg';
 export default function RecipeInProgress() {
   const { id } = useParams();
   const { pathname } = useLocation();
+  const isMeal: boolean = pathname.includes('/meals');
 
   // TO DO passar is loading para redux??
   const [isLoading, setIsLoading] = useState(true);
@@ -28,11 +29,17 @@ export default function RecipeInProgress() {
     favoriteRecipes: getLocalData('favoriteRecipes'),
   });
 
+  // const [checked, setChecked] = useState<string[]>(
+  //   isMeal
+  //     ? localData.inProgressRecipes.meals[id] : localData.inProgressRecipes.drinks[id],
+  // );
+
+  const checked = isMeal
+    ? localData.inProgressRecipes.meals[id] : localData.inProgressRecipes.drinks[id];
+
   const [isFavorite, setIsFavorite] = useState(
     localData.favoriteRecipes.some((recipe) => recipe.id === id),
   );
-
-  const isMeal: boolean = pathname.includes('/meals');
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -98,14 +105,42 @@ export default function RecipeInProgress() {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { labels } = e.target;
-    const value = 'line-through solid rgb(0, 0, 0)';
+    const { labels, value, checked: isChecked } = e.target;
+    // setChecked([...checked, value]);
 
-    if (labels && labels[0].style.textDecoration !== value) {
-      labels[0].style.textDecoration = value;
-    } else if (labels && labels[0].style.textDecoration === value) {
-      labels[0].style.textDecoration = '';
+    // if (labels && labels[0].className !== 'checked') {
+    //   labels[0].className = 'checked';
+    // } else if (labels && labels[0].className === 'checked') {
+    //   labels[0].className = '';
+    // }
+
+    // fazer lógica pra colocar e tirar da lista de checked e atualizar o local Storage e o estado
+    if (!checked.includes(value)) {
+      checked.push(value);
     }
+
+    if (isMeal) {
+      setLocalData({
+        ...localData,
+        inProgressRecipes: {
+          drinks: { ...localData.inProgressRecipes.drinks },
+          meals: { ...localData.inProgressRecipes.meals, [id]: checked },
+        },
+      });
+    } else {
+      setLocalData({
+        ...localData,
+        inProgressRecipes: {
+          drinks: { ...localData.inProgressRecipes.drinks, [id]: checked },
+          meals: { ...localData.inProgressRecipes.meals },
+        },
+      });
+    }
+
+    localStorage.setItem(
+      'inProgressRecipes',
+      JSON.stringify(localData.inProgressRecipes),
+    );
   };
 
   if (isLoading) {
@@ -160,24 +195,25 @@ export default function RecipeInProgress() {
         {alertVisible && <span className={ styles.copyAlert }>Link copied!</span>}
         <section>
           <h2>Ingredients</h2>
-          {ingredients.filter((ingredient) => ingredient !== null)
-            .map((ingredient, index) => {
-              return (
-                <div key={ `${index}-ingredient-step` }>
-                  <input
-                    type="checkbox"
-                    id={ `${index}-ingredient-step` }
-                    onChange={ handleChange }
-                  />
-                  <label
-                    htmlFor={ `${index}-ingredient-step` }
-                    data-testid={ `${index}-ingredient-step` }
-                  >
-                    {`${measurements[index]} ${ingredient}`}
-                  </label>
-                </div>
-              );
-            })}
+          {ingredients.map((ingredient, index) => {
+            return (
+              <div key={ `${index}-ingredient-step` }>
+                <input
+                  type="checkbox"
+                  id={ `${index}-ingredient-step` }
+                  onChange={ handleChange }
+                  value={ `${measurements[index]} ${ingredient}` }
+                />
+                <label
+                  htmlFor={ `${index}-ingredient-step` }
+                  data-testid={ `${index}-ingredient-step` }
+                  className={ checked.includes(ingredient) ? styles.checked : '' }
+                >
+                  {`${measurements[index]} ${ingredient}`}
+                </label>
+              </div>
+            );
+          })}
         </section>
         <section>
           <h2>Instructions</h2>
