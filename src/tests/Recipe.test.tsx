@@ -2,7 +2,6 @@ import { vi } from 'vitest';
 import { screen, waitFor, waitForElementToBeRemoved } from '@testing-library/dom';
 import { renderWithRouterAndRedux } from './helpers/renderWith';
 import App from '../App';
-import { mockFetchMealsCategories, mockFetchMealsPerCategories, mockFetchMealsReturnAll } from './helpers/mocks/api/mockFetchMeals';
 import * as ApiMeals from '../services/Meals/ApiMeals';
 import * as ApiDrinks from '../services/Drinks/ApiDrinks';
 import { dataMealsCategories } from './helpers/mocks/data/Meals/dataMealsCategories';
@@ -27,7 +26,9 @@ describe('<Recipes /> MEALS', () => {
   const requestFail = 'Erro request failed.';
 
   test('Testar se renderiza as 12 primeiras receitas de comidas', async () => {
-    vi.spyOn(global, 'fetch').mockImplementation(mockFetchMealsReturnAll as any);
+    // vi.spyOn(global, 'fetch').mockImplementation(mockFetchMealsReturnAll as any);
+    const mockInitial = vi.spyOn(ApiMeals, 'searchMealsName');
+    mockInitial.mockImplementation(() => Promise.resolve(dataMealsAll));
     const state = {
       revenues: {
         drinks: [],
@@ -50,7 +51,8 @@ describe('<Recipes /> MEALS', () => {
   });
 
   test('Testar se renderiza as 6 categorias de Comida ', async () => {
-    vi.spyOn(global, 'fetch').mockImplementation(mockFetchMealsCategories as any);
+    const mockInitial = vi.spyOn(ApiMeals, 'searchMealsCategories');
+    mockInitial.mockImplementation(() => Promise.resolve(dataMealsCategories));
     const state = {
       revenues: {
         drinks: [],
@@ -84,9 +86,8 @@ describe('<Recipes /> MEALS', () => {
     mockInitial.mockImplementation(() => Promise.resolve(dataMealsAll));
     const mockCategories = vi.spyOn(ApiMeals, 'searchMealsCategories');
     mockCategories.mockImplementation(() => Promise.resolve(dataMealsCategories));
-    vi.spyOn(global, 'fetch').mockImplementation(mockFetchMealsPerCategories as any);
-    // const mockCategoryGoat = vi.spyOn(ApiMeals, 'searchMealsPerCategorie');
-    // mockCategoryGoat.mockImplementation(() => Promise.resolve(dataMealsCategoryGoat));
+    const mockCategoryGoat = vi.spyOn(ApiMeals, 'searchMealsPerCategorie');
+    mockCategoryGoat.mockImplementation(() => Promise.resolve(dataMealsCategoryGoat));
 
     const state = {
       revenues: {

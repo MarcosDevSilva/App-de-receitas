@@ -111,4 +111,25 @@ describe('Teste da Página Favorite Recipes', () => {
     const urlCopiedTwo = `http://${pathname}/${MOCKdoneRecipesData[2].type}s/${MOCKdoneRecipesData[2].id}`;
     expect(shareLinkTwo).toBe(urlCopiedTwo);
   });
+
+  test('teste click de desfavoritar', async () => {
+    global.localStorage.setItem('favoriteRecipes', JSON.stringify(MOCKdoneRecipesData));
+    const state = {
+      revenues: {
+        drinks: [],
+        meals: [],
+        loading: false,
+      },
+    };
+    const { user } = renderWithRouterAndRedux(<App />, { initialEntries: [initialEntry], initialState: state });
+    const favoriteBtnRender = screen.queryAllByTestId(recipesFavoriteBtn);
+    const recipesNameRender = screen.queryAllByTestId(recipesName);
+    expect(recipesNameRender).toHaveLength(3);
+    expect(recipesNameRender[0]).toHaveTextContent(MOCKdoneRecipesData[0].name);
+    await user.click(favoriteBtnRender[0]);
+    const recipesNameRenderTwo = screen.queryAllByTestId(recipesName);
+    expect(recipesNameRenderTwo).toHaveLength(2);
+    expect(recipesNameRenderTwo[0]).toHaveTextContent(MOCKdoneRecipesData[1].name);
+    expect(recipesNameRenderTwo[1]).toHaveTextContent(MOCKdoneRecipesData[2].name);
+  });
 });
