@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { useEffect, useState } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import ReactPlayer from 'react-player/youtube';
@@ -89,7 +90,8 @@ export default function RecipeInProgress() {
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(`http://localhost:3000${pathname}`);
+    const url = isMeal ? `http://localhost:3000/meals/${id}` : `http://localhost:3000/drinks/${id}`;
+    navigator.clipboard.writeText(url);
     setAlertVisible(true);
     setTimeout(() => setAlertVisible(false), 2000);
   };
@@ -147,6 +149,34 @@ export default function RecipeInProgress() {
   };
 
   const handleClick = () => {
+    const dateNow = new Date();
+    localStorage.setItem('doneRecipes', JSON.stringify([...localData.doneRecipes, {
+      id: isMeal ? details.idMeal : details.idDrink,
+      type: isMeal ? 'meal' : 'drink',
+      nationality: isMeal ? details.strArea : '',
+      category: details.strCategory,
+      alcoholicOrNot: isMeal ? '' : details.strAlcoholic,
+      name: isMeal ? details.strMeal : details.strDrink,
+      image: isMeal ? details.strMealThumb : details.strDrinkThumb,
+      doneDate: dateNow.toISOString(),
+      tags: details.strTags,
+    }]));
+
+    const newList = isMeal ? localData.inProgressRecipes.meals
+      : localData.inProgressRecipes.drinks;
+    delete newList[id];
+
+    if (isMeal) {
+      localStorage.setItem('inProgressRecipes', JSON.stringify({
+        drinks: localData.inProgressRecipes.drinks,
+        meals: newList,
+      }));
+    } else {
+      localStorage.setItem('inProgressRecipes', JSON.stringify({
+        drinks: newList,
+        meals: localData.inProgressRecipes.meals,
+      }));
+    }
     navigate('/done-recipes');
   };
 
@@ -202,14 +232,6 @@ export default function RecipeInProgress() {
           {ingredients.map((ingredient, index) => {
             return (
               <div key={ `${index}-ingredient-step` }>
-                <input
-                  type="checkbox"
-                  id={ `${index}-ingredient-step` }
-                  onChange={ handleChange }
-                  value={ `${measurements[index]} ${ingredient}` }
-                  checked={ isChecked()
-                    .includes(`${measurements[index]} ${ingredient}`) }
-                />
                 <label
                   htmlFor={ `${index}-ingredient-step` }
                   data-testid={ `${index}-ingredient-step` }
@@ -218,6 +240,14 @@ export default function RecipeInProgress() {
                       ? styles.checked : ''
                   }
                 >
+                  <input
+                    type="checkbox"
+                    id={ `${index}-ingredient-step` }
+                    onChange={ handleChange }
+                    value={ `${measurements[index]} ${ingredient}` }
+                    checked={ isChecked()
+                      .includes(`${measurements[index]} ${ingredient}`) }
+                  />
                   {`${measurements[index]} ${ingredient}`}
                 </label>
               </div>
@@ -243,6 +273,7 @@ export default function RecipeInProgress() {
           </section>
         )}
         <button
+          data-testid="finish-recipe-btn"
           disabled={
           isChecked().length !== ingredients.length
         }
