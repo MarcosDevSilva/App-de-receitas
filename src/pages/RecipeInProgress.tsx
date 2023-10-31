@@ -90,7 +90,8 @@ export default function RecipeInProgress() {
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(`http://localhost:3000${pathname}`);
+    const url = isMeal ? `http://localhost:3000/meals/${id}` : `http://localhost:3000/drinks/${id}`;
+    navigator.clipboard.writeText(url);
     setAlertVisible(true);
     setTimeout(() => setAlertVisible(false), 2000);
   };
