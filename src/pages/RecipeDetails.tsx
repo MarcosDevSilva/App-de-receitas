@@ -49,7 +49,7 @@ export default function RecipeDetails() {
     const fetchDetails = async () => {
       if (isMeal) {
         try {
-          const response = await getMeal(id as string);// fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
+          const response = await getMeal(id as string); // fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
           // const data = await response.json();
           setDetails(response.meals[0]);
           setIsLoading(false);
