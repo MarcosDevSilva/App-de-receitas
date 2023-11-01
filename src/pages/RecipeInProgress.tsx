@@ -1,4 +1,3 @@
-/* eslint-disable max-lines */
 import { useEffect, useState } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import ReactPlayer from 'react-player/youtube';
@@ -12,24 +11,21 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import { getDrink } from '../services/Drinks/ApiDrinks';
 import { getMeal } from '../services/Meals/ApiMeals';
 import loadingIcon from '../images/spinner.svg';
+import { copyInProgress, isFavorites } from '../utils/recipesFunctions';
 
 export default function RecipeInProgress() {
   const { id } = useParams() as { id: string };
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const isMeal: boolean = pathname.includes('/meals');
-
-  // TO DO passar is loading para redux??
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true); // TO DO passar is loading para redux??
   const [alertVisible, setAlertVisible] = useState(false);
-  // TO DO passar details e localData para redux
-  const [details, setDetails] = useState<any>({});
+  const [details, setDetails] = useState<any>({}); // TO DO passar details e localData para redux
   const [localData, setLocalData] = useState<LocalDataType>({
     doneRecipes: getLocalData('doneRecipes'),
     inProgressRecipes: getLocalData('inProgressRecipes'),
     favoriteRecipes: getLocalData('favoriteRecipes'),
   });
-
   const [isFavorite, setIsFavorite] = useState(
     localData.favoriteRecipes.some((recipe) => recipe.id === id),
   );
@@ -54,7 +50,6 @@ export default function RecipeInProgress() {
         }
       }
     };
-
     fetchDetails();
   }, [pathname, id, isMeal]);
 
@@ -68,33 +63,11 @@ export default function RecipeInProgress() {
     .map((key) => details[key]);
 
   const setToFavorites = () => {
-    if (isFavorite) {
-      const newFavList = localData.favoriteRecipes.filter((recipe) => recipe.id !== id);
-      localStorage.setItem('favoriteRecipes', JSON.stringify(newFavList));
-      setIsFavorite(false);
-    } else {
-      localStorage.setItem(
-        'favoriteRecipes',
-        JSON.stringify([...localData.favoriteRecipes, {
-          id: isMeal ? details.idMeal : details.idDrink,
-          type: isMeal ? 'meal' : 'drink',
-          nationality: isMeal ? details.strArea : '',
-          category: details.strCategory,
-          alcoholicOrNot: isMeal ? '' : details.strAlcoholic,
-          name: isMeal ? details.strMeal : details.strDrink,
-          image: isMeal ? details.strMealThumb : details.strDrinkThumb,
-        }]),
-      );
-      setIsFavorite(true);
-    }
+    setIsFavorite(isFavorites(isFavorite, { isMeal, id }, details, localData));
   };
 
-  const handleCopy = () => {
-    const url = isMeal ? `http://localhost:3000/meals/${id}` : `http://localhost:3000/drinks/${id}`;
-    navigator.clipboard.writeText(url);
-    setAlertVisible(true);
-    setTimeout(() => setAlertVisible(false), 2000);
-  };
+  const handleCopy = () => copyInProgress(isMeal, id, setAlertVisible);
+
   const isChecked = () => {
     if (isMeal) {
       return localData.inProgressRecipes.meals[id]
@@ -109,35 +82,29 @@ export default function RecipeInProgress() {
       if (isChecked().includes(value)) {
         const newList = localData.inProgressRecipes.meals[id]
           .filter((ing: string) => ing !== value);
-
         return {
           drinks: { ...localData.inProgressRecipes.drinks },
-          meals: { ...localData.inProgressRecipes.meals,
-            [id]: newList },
+          meals: { ...localData.inProgressRecipes.meals, [id]: newList },
         };
       }
       return {
         drinks: { ...localData.inProgressRecipes.drinks },
         meals: { ...localData.inProgressRecipes.meals,
           [id]: localData.inProgressRecipes.meals[id]
-            ? [...localData.inProgressRecipes.meals[id], value]
-            : [value] },
+            ? [...localData.inProgressRecipes.meals[id], value] : [value] },
       };
     } if (isChecked().includes(value)) {
       const newList = localData.inProgressRecipes.drinks[id]
         .filter((ing: string) => ing !== value);
-
       return {
-        drinks: { ...localData.inProgressRecipes.drinks,
-          [id]: newList },
+        drinks: { ...localData.inProgressRecipes.drinks, [id]: newList },
         meals: { ...localData.inProgressRecipes.meals },
       };
     }
     return {
       drinks: { ...localData.inProgressRecipes.drinks,
         [id]: localData.inProgressRecipes.drinks[id]
-          ? [...localData.inProgressRecipes.drinks[id], value]
-          : [value] },
+          ? [...localData.inProgressRecipes.drinks[id], value] : [value] },
       meals: { ...localData.inProgressRecipes.meals },
     };
   };
@@ -161,11 +128,9 @@ export default function RecipeInProgress() {
       doneDate: dateNow.toISOString(),
       tags: details.strTags ? details.strTags.split(',') : [],
     }]));
-
     const newList = isMeal ? localData.inProgressRecipes.meals
       : localData.inProgressRecipes.drinks;
     delete newList[id];
-
     if (isMeal) {
       localStorage.setItem('inProgressRecipes', JSON.stringify({
         drinks: localData.inProgressRecipes.drinks,
@@ -235,10 +200,9 @@ export default function RecipeInProgress() {
                 <label
                   htmlFor={ `${index}-ingredient-step` }
                   data-testid={ `${index}-ingredient-step` }
-                  className={
-                    isChecked().includes(`${measurements[index]} ${ingredient}`)
-                      ? styles.checked : ''
-                  }
+                  className={ isChecked()
+                    .includes(`${measurements[index]} ${ingredient}`)
+                    ? styles.checked : '' }
                 >
                   <input
                     type="checkbox"
@@ -274,9 +238,7 @@ export default function RecipeInProgress() {
         )}
         <button
           data-testid="finish-recipe-btn"
-          disabled={
-          isChecked().length !== ingredients.length
-        }
+          disabled={ isChecked().length !== ingredients.length }
           onClick={ handleClick }
         >
           Finish Recipe
