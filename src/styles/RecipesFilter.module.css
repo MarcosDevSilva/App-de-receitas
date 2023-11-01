@@ -33,3 +33,13 @@
   padding: 2px;
   width: 40px;
 }
+
+.iconDrink {
+  border: 3px solid var(--black);
+  border-radius: 100%;
+  filter: invert(82%) sepia(61%) saturate(1973%) hue-rotate(330deg)
+    brightness(110%) contrast(110%);
+  height: 40px;
+  padding: 2px;
+  width: 40px;
+}

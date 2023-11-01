@@ -38,19 +38,19 @@ a {
 
 .content {
   display: flex;
-  flex-direction: column;
   font-size: 0.5rem;
   justify-content: center;
   margin: 15px 20px;
   max-width: 160px;
 }
 
-.header {
+/* .header {
   display: flex;
   justify-content: space-between;
-}
+} */
 
 .headercontent {
+  margin-top: 10px;
   width: 300px;
 }
 

@@ -10,6 +10,7 @@ import { fetchCategoriesDrinks, fetchCategoriesMeals,
   fetchDrinksName,
   fetchMealsName } from '../redux/actions';
 import { Dispatch } from '../types';
+import Icon from './Icon';
 
 function RecipesFilter() {
   const { pathname } = useLocation();
@@ -76,8 +77,7 @@ function RecipesFilter() {
         <img
           src={ (pathname === '/drinks') ? drinkIcon : mealIcon }
           alt="ALL"
-          className={ styles.icon }
-
+          className={ (pathname === '/drinks') ? styles.iconDrink : styles.icon }
         />
         ALL
       </button>
@@ -91,11 +91,12 @@ function RecipesFilter() {
           name={ strCategory }
           data-testid={ `${strCategory}-category-filter` }
         >
-          <img
+          <Icon category={ strCategory } stylesClass={ styles } />
+          {/* <img
             src={ (pathname === '/drinks') ? drinkIcon : mealIcon }
             alt={ strCategory }
             className={ styles.icon }
-          />
+          /> */}
           {strCategory}
 
         </button>

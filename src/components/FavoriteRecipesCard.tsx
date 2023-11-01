@@ -28,54 +28,52 @@ function FavoriteRecipesCard({ id, img, name, category,
         />
       </Link>
       <div className={ styles.content }>
-        <div className={ styles.header }>
-          <div className={ styles.headercontent }>
-            <Link
-              to={ `../${type}s/${id}` }
-              className={ styles.title }
-              data-testid={ `${index}-horizontal-name` }
+        <div className={ styles.headercontent }>
+          <Link
+            to={ `../${type}s/${id}` }
+            className={ styles.title }
+            data-testid={ `${index}-horizontal-name` }
+          >
+            { name }
+          </Link>
+          { (type === 'meal') && (
+            <p
+              className={ styles.category }
+              data-testid={ `${index}-horizontal-top-text` }
             >
-              { name }
-            </Link>
-            { (type === 'meal') && (
-              <p
-                className={ styles.category }
-                data-testid={ `${index}-horizontal-top-text` }
-              >
-                {`${nationality} - ${category}`}
-              </p>
-            )}
-            { (type === 'drink') && (
-              <p
-                className={ styles.category }
-                data-testid={ `${index}-horizontal-top-text` }
-              >
-                {alcoholicOrNot}
-              </p>
-            )}
-          </div>
-          <div className={ styles.btnContainer }>
-            <button
-              className={ styles.buttons }
-              onClick={ () => copyToClipboard() }
+              {`${nationality} - ${category}`}
+            </p>
+          )}
+          { (type === 'drink') && (
+            <p
+              className={ styles.category }
+              data-testid={ `${index}-horizontal-top-text` }
             >
-              {!shared && <img
-                src={ shareIcon }
-                alt="Share Recipe"
-                className={ styles.icon }
-                data-testid={ `${index}-horizontal-share-btn` }
-              />}
-              {shared && <span className={ styles.copied }>Link copied!</span>}
-            </button>
-            <button className={ styles.buttons } onClick={ () => removeFavorite(id) }>
-              <img
-                src={ blackHeartIcon }
-                alt="heart"
-                data-testid={ `${index}-horizontal-favorite-btn` }
-                className={ styles.icon }
-              />
-            </button>
-          </div>
+              {alcoholicOrNot}
+            </p>
+          )}
+        </div>
+        <div>
+          <button
+            className={ styles.buttons }
+            onClick={ () => copyToClipboard() }
+          >
+            {!shared && <img
+              src={ shareIcon }
+              alt="Share Recipe"
+              className={ styles.icon }
+              data-testid={ `${index}-horizontal-share-btn` }
+            />}
+            {shared && <span className={ styles.copied }>Link copied!</span>}
+          </button>
+          <button className={ styles.buttons } onClick={ () => removeFavorite(id) }>
+            <img
+              src={ blackHeartIcon }
+              alt="heart"
+              data-testid={ `${index}-horizontal-favorite-btn` }
+              className={ styles.icon }
+            />
+          </button>
         </div>
       </div>
     </div>

@@ -16,9 +16,10 @@ type IconType = {
   // category: 'dessert' | 'breakfast' | 'chicken' | 'beef' | 'meal' | 'drink' |
   // 'ordinary drink' | 'cocktail' | 'shake' | 'other/unknow' | 'cocoa' | 'goat';
   category?: string;
+  stylesClass?: CSSModuleClasses;
 };
 
-function Icon({ category = '' }: IconType) {
+function Icon({ category = '', stylesClass = styles }: IconType) {
   let icon = '';
 
   if (window.location.pathname.includes('meals')) {
@@ -50,7 +51,7 @@ function Icon({ category = '' }: IconType) {
   }
 
   return (
-    <img src={ icon } alt={ category } className={ styles.icon } />
+    <img src={ icon } alt={ category } className={ stylesClass.icon } />
   );
 }
 
