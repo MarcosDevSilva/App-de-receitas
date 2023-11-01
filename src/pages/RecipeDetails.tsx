@@ -13,9 +13,10 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 import getLocalData from '../helpers/getLocalData';
 import { getMeal } from '../services/Meals/ApiMeals';
 import { getDrink } from '../services/Drinks/ApiDrinks';
+import { isFavorites } from '../utils/recipesFunctions';
 
 export default function RecipeDetails() {
-  const { id } = useParams();
+  const { id } = useParams() as { id: string };
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
@@ -48,7 +49,7 @@ export default function RecipeDetails() {
     const fetchDetails = async () => {
       if (isMeal) {
         try {
-          const response = await getMeal(id as string);// fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
+          const response = await getMeal(id as string); // fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
           // const data = await response.json();
           setDetails(response.meals[0]);
           setIsLoading(false);
@@ -93,25 +94,7 @@ export default function RecipeDetails() {
   };
 
   const setToFavorites = () => {
-    if (isFavorite) {
-      const newFavList = localData.favoriteRecipes.filter((recipe) => recipe.id !== id);
-      localStorage.setItem('favoriteRecipes', JSON.stringify(newFavList));
-      setIsFavorite(false);
-    } else {
-      localStorage.setItem(
-        'favoriteRecipes',
-        JSON.stringify([...localData.favoriteRecipes, {
-          id: isMeal ? details.idMeal : details.idDrink,
-          type: isMeal ? 'meal' : 'drink',
-          nationality: isMeal ? details.strArea : '',
-          category: details.strCategory,
-          alcoholicOrNot: isMeal ? '' : details.strAlcoholic,
-          name: isMeal ? details.strMeal : details.strDrink,
-          image: isMeal ? details.strMealThumb : details.strDrinkThumb,
-        }]),
-      );
-      setIsFavorite(true);
-    }
+    setIsFavorite(isFavorites(isFavorite, { isMeal, id }, details, localData));
   };
 
   if (isLoading) {
@@ -168,17 +151,16 @@ export default function RecipeDetails() {
         <section>
           <h2>Ingredients</h2>
           <ul>
-            {ingredients.filter((ingredient) => ingredient !== null)
-              .map((ingredient, index) => {
-                return (
-                  <li
-                    key={ `${index}-ingredient-name-and-measure` }
-                    data-testid={ `${index}-ingredient-name-and-measure` }
-                  >
-                    {`${measurements[index]} ${ingredient}`}
-                  </li>
-                );
-              })}
+            {ingredients.map((ingredient, index) => {
+              return (
+                <li
+                  key={ `${index}-ingredient-name-and-measure` }
+                  data-testid={ `${index}-ingredient-name-and-measure` }
+                >
+                  {`${measurements[index]} ${ingredient}`}
+                </li>
+              );
+            })}
           </ul>
         </section>
         <section>

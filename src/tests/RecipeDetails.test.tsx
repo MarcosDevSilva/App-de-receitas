@@ -114,10 +114,11 @@ describe('<RecipeDetails />', () => {
 
   test('Verifique o botão Start Recipe no Drink direciona para a rota de progresso.', async () => {
     const mockDrink = vi.spyOn(ApiDrinks, 'getDrink');
-    mockDrink.mockImplementation(() => Promise.resolve(dataOneDrinkDetails));
+    mockDrink.mockImplementationOnce(() => Promise.resolve(dataOneDrinkDetails));
+    mockDrink.mockImplementationOnce(() => Promise.resolve(dataOneDrinkDetails));
     const mockRecommendations = vi.spyOn(ApiMeals, 'searchMealsRecommendations');
     mockRecommendations.mockImplementation(() => Promise.resolve(dataMealsIngredientsChicken));
-    // vi.spyOn(global, 'fetch').mockImplementation(mockFetchMealsIngredients as any);
+    vi.spyOn(global, 'fetch').mockImplementation(mockFetchMealsIngredients as any);
 
     const { user } = renderWithRouterAndRedux(<App />, { initialEntries: [drinkRote] });
 
@@ -130,16 +131,19 @@ describe('<RecipeDetails />', () => {
     expect(button.textContent).toBe('Start Recipe');
 
     await user.click(button);
-    // console.log(window.location.pathname);
 
-    // console.log(window.location.pathname);
-    // /drinks/15997/in-progress
-    // expect;
+    const title = await screen.findByTestId(titleId);
+    expect(title.textContent).toBe('GG');
+
+    const buttonInProgress = await screen.findByTestId('finish-recipe-btn');
+    expect(buttonInProgress).toBeInTheDocument();
+    expect(buttonInProgress.textContent).toBe('Finish Recipe');
   });
 
   test('Verifique o botão Start Recipe no Meal direciona para a rota de progresso.', async () => {
     const mockMeal = vi.spyOn(ApiMeals, 'getMeal');
-    mockMeal.mockImplementation(() => Promise.resolve(dataOneMealDetails));
+    mockMeal.mockImplementationOnce(() => Promise.resolve(dataOneMealDetails));
+    mockMeal.mockImplementationOnce(() => Promise.resolve(dataOneMealDetails));
     const mockRecommendations = vi.spyOn(ApiDrinks, 'searchDrinksRecommendations');
     mockRecommendations.mockImplementation(() => Promise.resolve(dataDrinksIngredientsWater));
 
@@ -156,9 +160,10 @@ describe('<RecipeDetails />', () => {
     expect(button.textContent).toBe('Start Recipe');
 
     await user.click(button);
-    // console.log(history.location.pathname);
-    // /drinks/15997/in-progress
-    // expect;
+
+    const buttonInProgress = await screen.findByTestId('finish-recipe-btn');
+    expect(buttonInProgress).toBeInTheDocument();
+    expect(buttonInProgress.textContent).toBe('Finish Recipe');
   });
 
   test('Favoritar o Drink e desfavoritar.', async () => {
@@ -173,7 +178,7 @@ describe('<RecipeDetails />', () => {
 
     const button = await screen.findByTestId('favorite-btn');
     await user.click(button);
-    console.log(localStorage.getItem('favoriteRecipes'));
+    // console.log(localStorage.getItem('favoriteRecipes'));
 
     expect(JSON.parse(localStorage.getItem('favoriteRecipes') as string) as Array<object>).toEqual(
       [

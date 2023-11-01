@@ -153,8 +153,8 @@ export type DoneRecipeType = {
 };
 
 export type InProgressRecipeType = {
-  drinks: object,
-  meals: object,
+  drinks: Record<string, string[]>,
+  meals: Record<string, string[]>,
 };
 
 export type FavoriteRecipeType = {
